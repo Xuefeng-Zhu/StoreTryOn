@@ -2,9 +2,11 @@
 
 StoreTryOn is a **SPECS Lens prototype**, not a browser app. The verified walkthrough runs in Lens Studio SPECS Preview with labelled synthetic photos. Its live result is from a real YouCam Clothes V4 request. Physical SPECS camera, networking, hand tracking and device-session persistence remain unverified.
 
+[Watch the public 1:54 demo](https://www.youtube.com/watch?v=kaKMy0Sg_cU) · [Submitted Devpost project](https://devpost.com/software/storetryon) · [Public source](https://github.com/Xuefeng-Zhu/StoreTryOn). The public links and submission were verified on November 2, 2026.
+
 ## Fresh clone and free UI walkthrough
 
-1. Clone [Xuefeng-Zhu/StoreTryOn](https://github.com/Xuefeng-Zhu/StoreTryOn). If access is restricted, the entrant must supply repository access; no public instant-play access is implied.
+1. Clone the public [Xuefeng-Zhu/StoreTryOn](https://github.com/Xuefeng-Zhu/StoreTryOn) repository. This is a local Lens Studio setup, not an instant-play browser demo.
 2. Install Lens Studio 5.23.2 or newer and open `StoreTryOn.esproj`. Use the bundled compatible **Spectacles Interaction Kit 2.0.0, UIKit 2.0.0 and LEAF 2.0.2**. Keep those versions; newer package namespaces differ. If a vendor package must be restored, use Lens Studio's Asset Library and its applicable terms. Do not hand-edit generated `Cache/` files.
 3. Set Preview to a SPECS device. Open the header's **Preview settings** and explicitly select **Use illustrations**. This editor-only mode needs no YouCam credential, makes **no provider request**, and labels its results as illustrative. It is the free UI walkthrough, not API proof. A fresh clone does not include the original machine's preview credential cache.
 4. **Load sample photo → Use this photo → Shirt or Jacket → Load garment.** Inspect the review page; Retake and Back let you revisit it. Choose **Try it on** for the labelled illustration.
@@ -33,7 +35,7 @@ npm test
 
 The eleven backend tests use mocked provider transport and a local HTTP server; they do **not** spend YouCam credits. LEAF preview scenarios and their observed outcomes are in [the UX verification](devpost/ui-ux-verification.md). Run live scenarios only deliberately; ordinary free UI tests are not live-provider proof.
 
-- [Demo publication record](devpost/demo-video-publication.md): verified 1:54 MP4, provenance and current public-video status. Use the verified watch URL there when available; this guide does not claim upload completion.
+- [Public demo video](https://www.youtube.com/watch?v=kaKMy0Sg_cU): verified 1:54 walkthrough. The [publication record](devpost/demo-video-publication.md) records export provenance and the verified Devpost submission.
 - [Actual guided live result](devpost/evidence/premium-ux/live-result.png): the successful shirt request returned a 1024×1536 image, saved one pair and opened its detail.
 - [Current verification](devpost/ui-ux-verification.md): exact passes, prior interrupted attempt and scope limits.
 - [Original shirt/jacket adapter evidence](Assets/LiveEvidence/README.md): separate real calls from synthetic fixtures.

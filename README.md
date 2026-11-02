@@ -2,6 +2,8 @@
 
 A SPECS Lens for clothing-store shoppers: capture a shirt or jacket, try it on using a reusable shopper photo, and save the garment and try-on preview in a device-local shopping list.
 
+**Submitted to the YouCam hackathon:** [Devpost project](https://devpost.com/software/storetryon) · [Watch the 1:54 demo](https://www.youtube.com/watch?v=kaKMy0Sg_cU) · [Judge setup](JUDGING.md). Entry `1278457` was verified Submitted on November 2, 2026.
+
 Open `StoreTryOn.esproj` in Lens Studio 5.23.2 or newer. This project targets SPECS and uses Spectacles Interaction Kit and UIKit. It is not a browser application.
 
 The Lens implements camera capture, photo-based try-on through a protected proxy, and a persistent local shopping list. Its guided native window moves from shopper photo to garment review, generation, result, and saved pieces. Editor preview uses labeled sample input photos and defaults to the live YouCam selection; a configured local proxy is required to generate. Hardware starts with live camera inputs. Provider credentials must never be embedded in the Lens or committed.
@@ -36,16 +38,16 @@ See [preview results and earlier failed attempts](Assets/Evidence/README.md) and
 
 The protected [backend](Assets/Backend/README.md) is deployed behind HTTPS on InstaCloud Free. The public `proxyBaseUrl` is configured on StoreTryOnMain. This machine's separate revocable proxy credential is cached in local preview persistent storage, so live generation survives preview resets while the authored scene credential stays empty. Cache lookup requires an exact matching HTTPS origin and applies only in the editor. A new machine needs local proxy setup; hardware still needs its own credential configuration. Do not put the YouCam provider key in the Inspector, preview cache, or `Assets/`.
 
-Lens-to-proxy HTTPS upload, polling, response retrieval, and native image decoding passed in SPECS 27 preview. Physical-device networking, real shopper-photo input, world-camera capture, physical hand tracking, and persistence across SPECS app/device sessions still require verification. Wearable judge access is unresolved. No Lens publishing has been performed. The Devpost entry is being prepared; see the publication record for its verified status.
+Lens-to-proxy HTTPS upload, polling, response retrieval, and native image decoding passed in SPECS 27 preview. Physical-device networking, real shopper-photo input, world-camera capture, physical hand tracking, and persistence across SPECS app/device sessions still require verification. Wearable judge access remains unresolved, and the SPECS Lens has not been published for wearable installation. The Devpost submission does not change these hardware and distribution limits.
 
 The client makes one creation POST per new attempt and never automatically repeats it. Interrupted read-only GETs receive at most three attempts with one- and two-second backoff. An explicit Retry with unchanged inputs resumes the known job; successful bytes stay in memory until native image decoding accepts them. New inputs, a new visit, teardown, or a 15-minute expiry discard that local recovery state. Local discard does not cancel a provider task or delete provider-held photos.
 
 ## Demo video
 
-The **1-minute 54-second** demo export is ready: [watch the local MP4](devpost/demo-video/out/storetryon-demo.mp4). It uses actual Lens Studio SPECS Preview footage, synthetic input photos, and a real YouCam-generated result, retaining the entire observed processing wait at actual speed. The public YouTube URL remains pending; the [Devpost project](https://devpost.com/software/storetryon) is a draft and has not been submitted. [Publication record and draft video metadata](devpost/demo-video-publication.md).
+[Watch the public **1-minute 54-second demo**](https://www.youtube.com/watch?v=kaKMy0Sg_cU). It uses actual Lens Studio SPECS Preview footage, synthetic input photos, and a real YouCam-generated result, retaining the entire observed processing wait at actual speed. The verified public video is attached to the [submitted Devpost entry](https://devpost.com/software/storetryon). [Publication and submission record](devpost/demo-video-publication.md).
 
 - [SPECS design brief](devpost/design-brief.md)
 - [Verified YouCam V4 contract and setup gaps](devpost/youcam-integration.md)
 - [Backend setup](Assets/Backend/README.md)
 
-The repository is private. Generated editor caches, scoped plugin extraction, local MCP configuration, and `.env*` secrets are excluded from Git.
+The [source repository](https://github.com/Xuefeng-Zhu/StoreTryOn) is public. Original authored code uses the [scoped MIT license](LICENSE); vendor packages and media retain their separate terms in [third-party notices](THIRD_PARTY_NOTICES.md). Generated editor caches, scoped plugin extraction, local MCP configuration, and `.env*` secrets are excluded from Git.

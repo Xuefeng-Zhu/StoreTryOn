@@ -1,0 +1,22 @@
+{
+  "project_id": 1523970,
+  "project_slug": "storetryon",
+  "submission_id": 1278457,
+  "hackathon_subdomain": "youcam-api-skin-ai-ecommerce",
+  "status": "Submitted",
+  "submitted_at": "2026-11-02T08:11:06.065-05:00",
+  "project_url": "https://devpost.com/software/storetryon",
+  "video_url": "https://www.youtube.com/watch?v=kaKMy0Sg_cU",
+  "source_url": "https://github.com/Xuefeng-Zhu/StoreTryOn",
+  "source_visibility": "PUBLIC",
+  "video_sha256": "b4df0ca065b28faa27a452d9fe36e4e894ca7ad9794964d91930764c162ac055",
+  "verification": {
+    "submit_project_status": "Submitted",
+    "get_project_state": "published",
+    "get_project_hackathon_submitted_at": "2026-11-02T08:11:06.065-05:00",
+    "anonymous_youtube_playback": "Observed progress to 0:21 / 1:54 with Sign in link visible",
+    "devpost_browser_status": "Submitted to"
+  },
+  "scope": "Lens Studio SPECS Preview, synthetic inputs, real YouCam output. Physical SPECS operation unverified.",
+  "source_commit_at_submission": "4c36606"
+}

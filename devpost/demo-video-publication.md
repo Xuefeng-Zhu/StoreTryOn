@@ -2,23 +2,24 @@
 
 Updated November 2, 2026, America/Los_Angeles.
 
-## Status: EXPORT READY
+## Status: PUBLIC VIDEO VERIFIED · DEVPOST SUBMITTED
 
 - Verified duration: **114.005 seconds (1:54)**, 3420 frames at 30 fps.
 - Format: 1920×1080, H.264 video with AAC stereo audio; **5,882,035 bytes**.
-- Public YouTube URL: **PENDING — not yet verified or recorded here.**
+- Verified public YouTube video: [Watch StoreTryOn](https://www.youtube.com/watch?v=kaKMy0Sg_cU).
+- Verified public source: [Xuefeng-Zhu/StoreTryOn](https://github.com/Xuefeng-Zhu/StoreTryOn).
 - Final exported file: [storetryon-demo.mp4](demo-video/out/storetryon-demo.mp4).
 - Editable source and supporting records: [Remotion project](demo-video/README.md), [verification JSON](demo-video/verification.json), [storyboard](demo-video/storyboard.md), [contact sheet](demo-video/storetryon-demo-contact-sheet.png), [captions](demo-video/storetryon-demo.srt).
 - Footage: actual Lens Studio 5.23.2 SPECS Preview, with synthetic shopper and garment inputs. Includes a genuine YouCam Clothes V4 shirt result, saving and saved-item navigation.
-- Devpost draft created: project `1523970`, [StoreTryOn](https://devpost.com/software/storetryon), entry `1278457` for the YouCam hackathon. The live readback shows `submitted_at: null`; creation of a draft is not submission.
+- Devpost project `1523970`: [StoreTryOn](https://devpost.com/software/storetryon), published. Hackathon entry `1278457`: **Submitted**. Official `submitted_at`: `2026-11-02T08:11:06.065-05:00` (13:11:06 UTC; 05:11:06 Pacific).
 
-The user authorized a public YouTube demo and providing its link on the hackathon submission form. Export is complete; public upload is pending the browser's legal acknowledgment, which has not been confirmed. This record is not evidence that upload or submission has completed. Replace the pending URL only after verifying the public watch page.
+The user authorized public YouTube publication, public source under the scoped original-code MIT license, and final submission after confirming the required declarations. The live submission operation returned Submitted, and official project readback confirmed the same entry and public video. Public GitHub visibility was also verified. Earlier draft creation and export readiness preceded this final confirmation; they were not treated as submission proof.
 
 Full audio/video decode, black-frame checks, narration-duration checks, and the final sampled visual review passed. The full observed processing wait is retained at 1×. Brief input actions are labelled 0.25× and explanation holds are labelled on screen. Narration uses local macOS Samantha with no music. Subjective audio listening was not claimed in the verification report.
 
 Export SHA-256: `b4df0ca065b28faa27a452d9fe36e4e894ca7ad9794964d91930764c162ac055`.
 
-## Draft YouTube metadata
+## Demo description and chapters
 
 **Title**
 
@@ -38,7 +39,7 @@ Built for the YouCam API Skin AI & eCommerce VTO Hackathon.
 
 **Chapters — final export scene timings**
 
-| Start | Length | Planned scene |
+| Start | Length | Scene |
 | --- | --- | --- |
 | 00:00 | 8s | StoreTryOn and the shopping problem |
 | 00:08 | 14s | Load and review the shopper photo |
@@ -51,10 +52,10 @@ Built for the YouCam API Skin AI & eCommerce VTO Hackathon.
 
 The eight scene durations total 114 seconds; the container's measured duration is 114.005 seconds. The opening identifies the earlier real shirt/jacket examples. The recorded new live call demonstrates a shirt.
 
-## Evidence and submission field
+## Evidence and verified submission
 
 The final guided live run returned and decoded a 1024×1536 JPEG, saved exactly one garment/result thumbnail pair and opened the collection/detail views. Its 43.679-second elapsed time includes viewing pauses and navigation, not provider-only latency. See [current UX verification](ui-ux-verification.md), [live result](evidence/premium-ux/live-result.png), and [API contract and earlier proof history](youcam-integration.md).
 
-The event requires a public 1–3 minute end-to-end demo that explains the YouCam API; YouTube is preferred. The standard connector field is `video_url`, separate from custom questions. Updating an existing project video does not replace an existing entry's own video; the entry-specific connector operation submits or re-submits. No draft-only entry-video setter was exposed by the read-only discovery. [Event requirements](https://youcam-api-skin-ai-ecommerce.devpost.com/).
+The verified [public video](https://www.youtube.com/watch?v=kaKMy0Sg_cU) is attached to entry `1278457` for the [YouCam hackathon](https://youcam-api-skin-ai-ecommerce.devpost.com/). The official project readback confirmed its URL and Submitted status. The 1:54 recording explains the YouCam API and demonstrates the successful editor-preview flow.
 
-The rules ask for footage of the project functioning on its intended device and permit requests for wearable hardware access. Label this video Lens Studio SPECS Preview and preserve the physical-device limitation in any submission text. [Official rules](https://youcam-api-skin-ai-ecommerce.devpost.com/rules).
+The recording is explicitly labelled Lens Studio SPECS Preview and uses synthetic input photos. Physical SPECS operation and wearable judge access remain unverified; submission confirmation does not establish device verification, organizer acceptance of that evidence scope or a judging outcome. The rules permit requests for wearable hardware access. [Official rules](https://youcam-api-skin-ai-ecommerce.devpost.com/rules).
