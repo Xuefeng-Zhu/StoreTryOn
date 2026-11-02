@@ -17,6 +17,9 @@ export class StoreTryOnShirtFlow extends Scenario {
     expect(stored.length).toBe(before + 1)
     const item = stored[stored.length - 1]
     expect(item.category).toBe('shirt')
+    expect(item.sample).toBe(true)
+    expect(item.generatedByYouCam).toBe(false)
+    expect(item.syntheticInputs).toBe(true)
     await StoreTryOnHarness.assertSavedImages(item)
     await h.tap('AddToList')
     expect(h.main.getSnapshot().savedCount).toBe(before + 1)

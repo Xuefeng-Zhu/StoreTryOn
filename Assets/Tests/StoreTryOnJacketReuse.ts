@@ -30,6 +30,9 @@ export class StoreTryOnJacketReuse extends Scenario {
     const stored = new StoreTryOnStorage().read()
     const item = stored[stored.length - 1]
     expect(item.category).toBe('jacket')
+    expect(item.sample).toBe(true)
+    expect(item.generatedByYouCam).toBe(false)
+    expect(item.syntheticInputs).toBe(true)
     await StoreTryOnHarness.assertSavedImages(item)
     expect(h.main.state.shopper === shopper).toBe(true)
     print('[StoreTryOn LEAF] Jacket selection invalidated shirt result; shopper photo reused and jacket saved. Category→outer live mapping requires separate proxy/provider evidence.')

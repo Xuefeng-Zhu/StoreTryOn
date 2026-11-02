@@ -11,6 +11,8 @@ import {StoreTryOnClearRestartVerify} from './StoreTryOnClearRestartVerify'
 import {StoreTryOnIKReach} from './StoreTryOnIKReach'
 import {StoreTryOnNetworkProbe} from './StoreTryOnNetworkProbe'
 import {StoreTryOnLiveNetwork} from './StoreTryOnLiveNetwork'
+import {StoreTryOnLiveDefault} from './StoreTryOnLiveDefault'
+import {StoreTryOnLiveUI} from './StoreTryOnLiveUI'
 
 @component
 export class LeafIndex extends BaseScriptComponent {
@@ -26,6 +28,12 @@ export class LeafIndex extends BaseScriptComponent {
     {id: 'storetryon-clear-restart-verify', typename: StoreTryOnClearRestartVerify.getTypeName()},
     {id: 'storetryon-network-probe', typename: StoreTryOnNetworkProbe.getTypeName(), parameters: {__leaf__timeout_secs: '90'}},
     {id: 'storetryon-live-network', typename: StoreTryOnLiveNetwork.getTypeName(), parameters: {
+      confirmLiveRequest: 'false', __leaf__timeout_secs: '360',
+    }},
+    {id: 'storetryon-live-default', typename: StoreTryOnLiveDefault.getTypeName(), parameters: {
+      restartCheck: 'record', __leaf__timeout_secs: '60',
+    }},
+    {id: 'storetryon-live-ui', typename: StoreTryOnLiveUI.getTypeName(), parameters: {
       confirmLiveRequest: 'false', __leaf__timeout_secs: '360',
     }},
     {id: 'storetryon-ik-reach', typename: StoreTryOnIKReach.getTypeName(), parameters: {

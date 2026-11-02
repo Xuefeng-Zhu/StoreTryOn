@@ -19,7 +19,7 @@ export class StoreTryOnHarness {
   readonly interactor = new DefaultLeafInteractor()
   constructor(readonly main: StoreTryOnMain, readonly root: SceneObject) {}
 
-  static async open(): Promise<StoreTryOnHarness> {
+  static async open(illustrationMode = true): Promise<StoreTryOnHarness> {
     await sleep(1500)
     if (!global.deviceInfoSystem.isEditor()) throw new Error('These synthetic-data scenarios are preview-only. Hardware acceptance is a separate check.')
     const root = findSceneObjectByName('StoreTryOn')
@@ -29,6 +29,9 @@ export class StoreTryOnHarness {
     const harness = new StoreTryOnHarness(main, root)
     await harness.until(() => main.getControl('ShopperPhoto') !== null, 'UIKit controls initialize')
     await harness.idle()
+    // Existing functional scenarios are explicitly free. Live UI scenarios
+    // opt out so they can inspect the normal startup mode before any action.
+    if (illustrationMode) await harness.sampleMode()
     return harness
   }
 
@@ -44,12 +47,12 @@ export class StoreTryOnHarness {
     return button.interactable
   }
 
-  async tap(action: StoreTryOnAction): Promise<void> {
+  async tap(action: StoreTryOnAction, timeoutMs = 15000): Promise<void> {
     // Exercise SIK targeting and UIKit's trigger-up binding. Never call the
     // controller's handleAction() or invoke the UI action event directly.
     await this.interactor.trigger(this.target(action))
     await sleep(100)
-    await this.idle()
+    await this.idle(timeoutMs)
   }
 
   async until(condition: () => boolean, label: string, timeoutMs = 15000): Promise<void> {
@@ -60,7 +63,7 @@ export class StoreTryOnHarness {
     throw new Error('Timed out waiting for ' + label + '; phase=' + this.main.getSnapshot().phase)
   }
 
-  async idle(): Promise<void> { await this.until(() => !this.main.getSnapshot().busy, 'action completion') }
+  async idle(timeoutMs = 15000): Promise<void> { await this.until(() => !this.main.getSnapshot().busy, 'action completion', timeoutMs) }
 
   async capturePage(): Promise<void> {
     if (this.main.getSnapshot().listOpen) await this.tap('Back')
@@ -69,9 +72,14 @@ export class StoreTryOnHarness {
 
   async sampleMode(): Promise<void> {
     await this.capturePage()
-    if (!this.main.getSnapshot().sampleMode) await this.tap('ToggleMode')
+    // In editor, ToggleMode changes generation mode; inputs remain synthetic.
+    // Selecting sample inputs alone no longer guarantees a free illustration.
+    expect(this.main.getSnapshot().isEditor).toBe(true)
     expect(this.main.getSnapshot().sampleMode).toBe(true)
+    if (this.main.getSnapshot().useLiveApi) await this.tap('ToggleMode')
+    expect(this.main.getSnapshot().useLiveApi).toBe(false)
     expect(this.visibleTextContains('SAMPLE MODE')).toBe(true)
+    expect(this.visibleTextContains('no API requests')).toBe(true)
   }
 
   async freshVisit(): Promise<void> {
@@ -82,6 +90,7 @@ export class StoreTryOnHarness {
     expect(this.main.getSnapshot().shopperReady).toBe(false)
     expect(this.main.getSnapshot().garmentReady).toBe(false)
     expect(this.main.getSnapshot().previewReady).toBe(false)
+    expect(this.main.getSnapshot().useLiveApi).toBe(false)
   }
 
   async shirtResult(): Promise<void> {
@@ -93,6 +102,8 @@ export class StoreTryOnHarness {
     const snapshot = this.main.getSnapshot()
     expect(snapshot.phase).toBe('result')
     expect(snapshot.previewReady).toBe(true)
+    expect(snapshot.useLiveApi).toBe(false)
+    expect(snapshot.previewFromLiveApi).toBe(false)
     expect(snapshot.message.includes('NOT a live YouCam result')).toBe(true)
     expect(this.visibleTextContains('NOT YouCam')).toBe(true)
     expect(this.visiblePhotos().length).toBe(2)
@@ -106,8 +117,8 @@ export class StoreTryOnHarness {
 
   requireSyntheticList(): StoredShoppingItem[] {
     const items = new StoreTryOnStorage().read()
-    if (items.some(item => item.sample !== true)) {
-      throw new Error('Refusing destructive synthetic-preview test: list contains an entry not marked sample.')
+    if (items.some(item => item.syntheticInputs !== true && item.sample !== true)) {
+      throw new Error('Refusing destructive synthetic-preview test: list contains an entry not marked as synthetic inputs or a legacy illustration.')
     }
     return items
   }
@@ -160,7 +171,7 @@ export class StoreTryOnHarness {
   }
 
   static async assertSavedImages(item: StoredShoppingItem): Promise<void> {
-    expect(item.sample).toBe(true)
+    expect(item.syntheticInputs === true || item.sample === true).toBe(true)
     await StoreTryOnHarness.assertJpeg(item.garmentImageBase64)
     await StoreTryOnHarness.assertJpeg(item.previewImageBase64)
     expect(item.garmentImageBase64 === item.previewImageBase64).toBe(false)
@@ -173,7 +184,21 @@ export class StoreTryOnHarness {
       return value.length + ':' + b + ':' + a
     }
     return JSON.stringify(items.map(item => ({id: item.id, category: item.category, sample: item.sample,
+      generatedByYouCam: item.generatedByYouCam, syntheticInputs: item.syntheticInputs,
       garment: checksum(item.garmentImageBase64), preview: checksum(item.previewImageBase64)})))
+  }
+
+  assertLiveConfigurationFromCache(): void {
+    const raw = global.persistentStorageSystem.store.getString('StoreTryOn.previewProxy.v1')
+    expect(raw.length > 0).toBe(true)
+    let cached: {baseUrl?: unknown, accessToken?: unknown}
+    try { cached = JSON.parse(raw) as {baseUrl?: unknown, accessToken?: unknown} }
+    catch (_) { throw new Error('The preview proxy credential cache is unreadable.') }
+    // Boolean assertions prevent LEAF from printing either credential on failure.
+    expect(/^https:\/\//.test(this.main.proxyBaseUrl)).toBe(true)
+    expect(this.main.proxyAccessToken.trim().length >= 32).toBe(true)
+    expect(typeof cached.accessToken === 'string' && cached.accessToken === this.main.proxyAccessToken).toBe(true)
+    expect(typeof cached.baseUrl === 'string' && cached.baseUrl === this.main.proxyBaseUrl).toBe(true)
   }
 
   checkpoint(kind: 'seeded' | 'cleared'): void {

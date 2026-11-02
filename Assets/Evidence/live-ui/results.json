@@ -1,0 +1,46 @@
+{
+  "recordedAt": "2026-11-02T00:21:21.465476-08:00",
+  "target": "SPECS 27 Lens Studio preview",
+  "cause": "The earlier sampleMode flag also selected illustrative generation; the live endpoint was exercised only by a separate test.",
+  "fix": "Sample input source and live generation are separate; local editor proxy setup persists across preview resets.",
+  "startupChecks": [
+    {
+      "restartCheck": "record",
+      "editor": true,
+      "syntheticInputs": true,
+      "liveApi": true,
+      "cachedCredentialMatchesRuntime": true,
+      "generationRequested": false,
+      "hardwareVerified": false
+    },
+    {
+      "restartCheck": "verify",
+      "editor": true,
+      "syntheticInputs": true,
+      "liveApi": true,
+      "cachedCredentialMatchesRuntime": true,
+      "generationRequested": false,
+      "hardwareVerified": false
+    }
+  ],
+  "liveUiResult": {
+    "provider": "YouCam Clothes V4",
+    "category": "shirt",
+    "inputOrigin": "synthetic fixtures",
+    "controller": "normal StoreTryOnMain UI",
+    "resultFromLiveApi": true,
+    "savedCountDelta": 1,
+    "width": 1024,
+    "height": 1536,
+    "elapsedSeconds": 20.961,
+    "persistedJpegImages": true,
+    "cachedCredentialMatchesRuntime": true,
+    "mocked": false,
+    "hardwareVerified": false
+  },
+  "regression": "storetryon-guard-retry passed in explicit illustration mode with no API requests",
+  "authoredProxyCredentialEmpty": true,
+  "providerKeyInLens": false,
+  "localPreviewCredentialPersisted": true,
+  "hardwareVerified": false
+}

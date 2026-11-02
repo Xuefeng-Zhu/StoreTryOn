@@ -85,13 +85,28 @@ export class StoreTryOnPanelUI extends BaseScriptComponent {
     const listItem = this.listPage!.getComponent(FlexItem.getTypeName()) as FlexItem
     this.pageLayout!.removeItems([snapshot.listOpen ? captureItem : listItem])
     this.pageLayout!.addItems([snapshot.listOpen ? listItem : captureItem])
-    this.modeLabel!.text = snapshot.sampleMode ? 'SAMPLE MODE · simulated capture + illustrative result' : 'LIVE MODE · your photos are sent to YouCam'
-    this.guideLabel!.text = snapshot.shopperReady ? 'Your photo is ready for this visit. Capture one shirt or jacket.' : 'Capture your full-body photo from another display. Reuse it for this visit.'
+    this.modeLabel!.text = snapshot.useLiveApi
+      ? (snapshot.sampleMode ? 'LIVE YOUCAM · SAMPLE PHOTOS · uses credits' : 'LIVE YOUCAM · CAMERA PHOTOS · uses credits')
+      : 'SAMPLE MODE · illustrations · no API requests'
+    this.guideLabel!.text = snapshot.sampleMode
+      ? (snapshot.useLiveApi
+        ? 'Load sample photos. Try it on sends them to YouCam and uses credits.'
+        : 'Load a sample shopper photo and garment. Illustrations use no API.')
+      : (snapshot.shopperReady
+        ? 'Your photo is reused this visit. Try it on sends both photos to YouCam.'
+        : 'Capture your full-body photo from another display. Try-on sends photos to YouCam.')
     this.statusLabel!.text = snapshot.message
     this.garmentLabel!.text = snapshot.garmentReady ? (snapshot.category === 'shirt' ? 'Shirt' : 'Jacket') : 'Garment photo'
-    this.resultLabel!.text = snapshot.previewReady ? (snapshot.sampleMode ? 'Illustration · NOT YouCam' : 'YouCam try-on preview') : 'Your photo · this visit'
-    this.contentLabels.ShopperPhoto!.text = snapshot.shopperReady ? 'Replace my photo' : 'Capture my photo'
-    this.contentLabels.ToggleMode!.text = snapshot.sampleMode ? 'Use live camera' : 'Use sample mode'
+    this.resultLabel!.text = snapshot.previewReady
+      ? (snapshot.previewFromLiveApi ? 'YouCam try-on preview' : 'Illustration · NOT YouCam')
+      : (snapshot.sampleMode ? 'Sample shopper photo' : 'Your photo · this visit')
+    this.contentLabels.ShopperPhoto!.text = snapshot.sampleMode
+      ? (snapshot.shopperReady ? 'Reload sample photo' : 'Load sample photo')
+      : (snapshot.shopperReady ? 'Replace my photo' : 'Capture my photo')
+    this.contentLabels.CaptureGarment!.text = snapshot.sampleMode ? 'Load garment' : 'Capture garment'
+    this.contentLabels.ToggleMode!.text = snapshot.isEditor
+      ? (snapshot.useLiveApi ? 'Use illustrations' : 'Use live YouCam')
+      : (snapshot.sampleMode ? 'Use live camera' : 'Use sample demo')
     this.contentLabels.TryOn!.text = snapshot.phase === 'error' ? 'Retry try-on' : 'Try it on'
     this.contentLabels.ShoppingList!.text = 'Shopping list (' + snapshot.savedCount + ')'
     this.contentLabels.Shirt!.text = (snapshot.category === 'shirt' ? '✓ ' : '') + 'Shirt'

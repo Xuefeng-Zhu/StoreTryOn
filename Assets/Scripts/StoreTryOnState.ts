@@ -5,7 +5,10 @@ export interface StoredShoppingItem {
   category: GarmentCategory
   garmentImageBase64: string
   previewImageBase64: string
+  /** Legacy flag: true identifies an illustrative result, not its input source. */
   sample: boolean
+  generatedByYouCam?: boolean
+  syntheticInputs?: boolean
   createdAt: number
 }
 export interface StoreTryOnSnapshot {
@@ -16,6 +19,9 @@ export interface StoreTryOnSnapshot {
   garmentReady: boolean
   previewReady: boolean
   sampleMode: boolean
+  useLiveApi: boolean
+  previewFromLiveApi: boolean
+  isEditor: boolean
   listOpen: boolean
   savedCount: number
   selectedIndex: number
@@ -30,10 +36,13 @@ export class StoreTryOnState {
   garment: Texture | null = null
   preview: Texture | null = null
   sampleMode = true
+  useLiveApi = false
+  previewFromLiveApi = false
+  isEditor = false
   listOpen = false
   selectedIndex = 0
   items: StoredShoppingItem[] = []
-  message = 'Start with your photo, then capture one garment.'
+  message = 'Choose your photo, then one garment.'
   captureRevision = 0
   savedRevision = -1
 
@@ -41,6 +50,7 @@ export class StoreTryOnState {
 
   invalidateResult(): void {
     this.preview = null
+    this.previewFromLiveApi = false
     this.phase = 'ready'
     this.captureRevision++
     this.savedRevision = -1
@@ -51,6 +61,8 @@ export class StoreTryOnState {
       phase: this.phase, busy: this.busy, category: this.category,
       shopperReady: this.shopper !== null, garmentReady: this.garment !== null,
       previewReady: this.preview !== null, sampleMode: this.sampleMode,
+      useLiveApi: this.useLiveApi, previewFromLiveApi: this.previewFromLiveApi,
+      isEditor: this.isEditor,
       listOpen: this.listOpen, savedCount: this.items.length,
       selectedIndex: this.selectedIndex, message: this.message,
     }

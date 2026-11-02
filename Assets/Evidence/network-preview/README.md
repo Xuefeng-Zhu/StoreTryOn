@@ -25,6 +25,8 @@ The YouCam provider key lives only in server secrets. A separate revocable proxy
 
 The live LEAF scenario is opt-in: `confirmLiveRequest` defaults to `false`, because a run consumes a provider request. Credentials never appear in scenario parameters. Ordinary sample-mode UI actions still use labeled illustrations and do not start paid API jobs.
 
+**Later correction, November 2:** the normal UI is now connected to live YouCam as well. Sample input photos and generation mode are separate, and local preview configuration survives resets. The ordinary Try it on button consumes a real request in live mode; illustrations require an explicit choice. See [normal UI live proof](../live-ui/README.md). The preceding paragraph describes the earlier networking-only verification state.
+
 The CameraModule still-photo implementation was migrated from deprecated `requestImage` to supported `CaptureSession` APIs verified against this project's type declarations. It compiles, and mode-switch/retry regression passes. This does **not** establish hardware camera behavior. Current Snap documentation describes Transparent Permission for camera plus internet; no Extended Permissions or experimental flags were enabled by this change.
 
 Not established: physical SPECS networking, real camera capture, a real shopper-photo result, physical hand comfort, or persistence across actual device relaunches. Hardware validation remains a separate acceptance run.

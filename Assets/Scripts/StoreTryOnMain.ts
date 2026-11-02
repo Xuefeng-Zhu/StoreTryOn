@@ -3,6 +3,7 @@ import {StoreTryOnState, StoredShoppingItem} from './StoreTryOnState'
 import {StoreTryOnStorage} from './StoreTryOnStorage'
 import {StoreTryOnCapture} from './StoreTryOnCapture'
 import {StoreTryOnProxy} from './StoreTryOnProxy'
+import {resolvePreviewProxySettings} from './StoreTryOnPreviewSettings'
 import {encodeImage, decodeImage, makeThumbnail} from './StoreTryOnImages'
 
 const CLICK = requireAsset('../GeneratedSFX/StoreTryOnClick.wav') as AudioTrackAsset
@@ -50,12 +51,27 @@ export class StoreTryOnMain extends BaseScriptComponent {
     if (!this.ui) { print('[StoreTryOn] Missing UI component.'); return }
     this.storage = new StoreTryOnStorage()
     this.capture = new StoreTryOnCapture()
+    this.state.isEditor = global.deviceInfoSystem.isEditor()
+    let setupMessage = ''
+    try {
+      const settings = resolvePreviewProxySettings(this.proxyBaseUrl, this.proxyAccessToken, this.state.isEditor)
+      // Runtime fields only: the separate preview credential is not written
+      // back into the authored scene or Git repository.
+      this.proxyBaseUrl = settings.baseUrl
+      this.proxyAccessToken = settings.accessToken
+    } catch (error) {
+      setupMessage = error instanceof Error ? error.message : 'Local live-preview setup could not be saved.'
+    }
     this.proxy = new StoreTryOnProxy(this.proxyBaseUrl, this.proxyAccessToken, seconds => this.delay(seconds))
     this.clickAudio = this.sceneObject.createComponent('Component.AudioComponent') as AudioComponent
     this.clickAudio.audioTrack = CLICK; this.clickAudio.volume = this.soundVolume
     this.savedAudio = this.sceneObject.createComponent('Component.AudioComponent') as AudioComponent
     this.savedAudio.audioTrack = SAVED; this.savedAudio.volume = this.soundVolume
-    this.state.sampleMode = global.deviceInfoSystem.isEditor()
+    this.state.sampleMode = this.state.isEditor
+    this.state.useLiveApi = this.state.isEditor ? this.proxy.configured() : true
+    this.state.message = setupMessage || (this.state.isEditor
+      ? this.state.useLiveApi ? 'Load sample photos. Try it on sends them to YouCam and uses credits.' : 'Illustration mode. Live YouCam needs local proxy setup.'
+      : 'Capture your photo once, then one garment. Try it on sends both photos to YouCam.')
     try { this.state.items = this.storage.read() }
     catch (_) { this.state.message = 'Saved list could not be read. Open Shopping list, then Clear list to reset.' }
     this.ui.onAction.add(action => { this.handleAction(action).catch(error => this.fail(error)) })
@@ -64,7 +80,7 @@ export class StoreTryOnMain extends BaseScriptComponent {
       catch (_) { this.state.message = 'Camera permission is needed. Check SPECS permission settings or use sample mode.' }
     }
     this.refresh()
-    print('[StoreTryOn] Ready. Mode=' + (this.state.sampleMode ? 'sample' : 'live') + '; saved=' + this.state.items.length + '; storageQuota=' + this.storage.getMaxBytes())
+    print('[StoreTryOn] Ready. Inputs=' + (this.state.sampleMode ? 'sample' : 'camera') + '; generation=' + (this.state.useLiveApi ? 'YouCam' : 'illustration') + '; saved=' + this.state.items.length + '; storageQuota=' + this.storage.getMaxBytes())
   }
 
   getSnapshot(): ReturnType<StoreTryOnState['snapshot']> { return this.state.snapshot() }
@@ -85,11 +101,19 @@ export class StoreTryOnMain extends BaseScriptComponent {
       case 'Shirt': this.changeCategory('shirt'); break
       case 'Jacket': this.changeCategory('jacket'); break
       case 'ToggleMode':
-        this.state.sampleMode = !this.state.sampleMode
+        if (this.state.isEditor) {
+          this.state.sampleMode = true
+          this.state.useLiveApi = !this.state.useLiveApi
+        } else {
+          this.state.sampleMode = !this.state.sampleMode
+          this.state.useLiveApi = !this.state.sampleMode
+        }
         this.state.shopper = null; this.state.garment = null; this.state.invalidateResult()
         if (this.state.sampleMode) this.capture.stop()
         else if (!global.deviceInfoSystem.isEditor()) this.capture.start()
-        this.state.message = this.state.sampleMode ? 'Sample mode uses synthetic images; no API request is made.' : 'Capture your own photo first. Try-on uploads both photos to YouCam.'
+        this.state.message = this.state.useLiveApi
+          ? this.state.sampleMode ? 'Live YouCam uses sample photos here. Try it on sends them and uses credits.' : 'Capture your own photo first. Try-on uploads both photos to YouCam.'
+          : 'Illustration mode uses sample images. No API request is made.'
         break
       case 'ShoppingList': this.state.listOpen = true; this.state.selectedIndex = 0; await this.showSaved(); break
       case 'Back': this.state.listOpen = false; break
@@ -124,7 +148,9 @@ export class StoreTryOnMain extends BaseScriptComponent {
     if (shopper) this.state.shopper = texture
     else this.state.garment = texture
     this.state.invalidateResult()
-    this.state.message = shopper ? 'Your photo is ready and will be reused during this visit.' : 'Garment captured. Check the category, then Try it on.'
+    this.state.message = shopper
+      ? this.state.sampleMode ? 'Sample shopper photo ready. It will be reused during this visit.' : 'Your photo is ready and will be reused during this visit.'
+      : this.state.sampleMode ? 'Sample garment loaded. Check the category, then Try it on.' : 'Garment captured. Check the category, then Try it on.'
   }
 
   private changeCategory(category: 'shirt' | 'jacket'): void {
@@ -135,17 +161,17 @@ export class StoreTryOnMain extends BaseScriptComponent {
 
   private async generate(): Promise<void> {
     if (!this.state.shopper || !this.state.garment) throw new Error('Capture your photo and a garment before trying it on.')
-    this.state.preview = null; this.state.phase = 'generating'
-    this.state.message = this.state.sampleMode ? 'Preparing illustrative sample… no API request' : 'Uploading photos securely to YouCam…'
+    this.state.preview = null; this.state.previewFromLiveApi = false; this.state.phase = 'generating'
+    this.state.message = this.state.useLiveApi ? 'Uploading photos securely to YouCam…' : 'Preparing illustrative sample… no API request'
     this.refresh()
-    if (this.state.sampleMode) {
+    if (!this.state.useLiveApi) {
       await this.delay(0.6)
       const sample = this.state.category === 'shirt' ? this.sampleShirtPreview : this.sampleJacketPreview
       if (!sample) throw new Error('Illustrative sample result is not configured.')
       this.state.preview = sample
       this.state.message = 'Illustrative sample only — this is NOT a live YouCam result.'
     } else {
-      if (!this.proxy.configured()) throw new Error('Live try-on needs a deployed HTTPS proxy and access token. Use sample mode to explore the flow.')
+      if (!this.proxy.configured()) throw new Error('Live YouCam needs local proxy setup. Choose Use illustrations to explore without API requests.')
       const shopper = await encodeImage(this.state.shopper)
       const garment = await encodeImage(this.state.garment)
       const generated = await this.proxy.generate(shopper, garment, this.state.category, message => {
@@ -153,7 +179,10 @@ export class StoreTryOnMain extends BaseScriptComponent {
       })
       this.state.preview = await decodeImage(generated)
       if (!this.active) return
-      this.state.message = 'YouCam preview ready. Generated appearance may differ from actual fit.'
+      this.state.previewFromLiveApi = true
+      this.state.message = this.state.sampleMode
+        ? 'YouCam preview ready from sample photos. This is a real API-generated result.'
+        : 'YouCam preview ready. Generated appearance may differ from actual fit.'
     }
     this.state.phase = 'result'
     this.state.savedRevision = -1
@@ -172,14 +201,15 @@ export class StoreTryOnMain extends BaseScriptComponent {
     const entry: StoredShoppingItem = {
       id: Date.now().toString(36) + '-' + this.state.captureRevision,
       category: this.state.category, garmentImageBase64: garment, previewImageBase64: preview,
-      sample: this.state.sampleMode, createdAt: Date.now(),
+      sample: !this.state.previewFromLiveApi, generatedByYouCam: this.state.previewFromLiveApi,
+      syntheticInputs: this.state.sampleMode, createdAt: Date.now(),
     }
     const items = this.state.items.concat([entry])
     this.storage.write(items)
     this.state.items = items; this.state.savedRevision = this.state.captureRevision
     this.state.phase = 'result'; this.state.message = 'Added to shopping list · photos saved on this device.'
     this.savedAudio.play(1)
-    print('[StoreTryOn] Saved ' + entry.category + '; sample=' + entry.sample + '; count=' + items.length)
+    print('[StoreTryOn] Saved ' + entry.category + '; generatedByYouCam=' + entry.generatedByYouCam + '; syntheticInputs=' + entry.syntheticInputs + '; count=' + items.length)
   }
 
   private moveSaved(delta: number): void {
@@ -194,7 +224,11 @@ export class StoreTryOnMain extends BaseScriptComponent {
     const garment = await decodeImage(item.garmentImageBase64)
     const preview = await decodeImage(item.previewImageBase64)
     if (revision !== this.readRevision) return
-    this.ui.renderSaved(garment, preview, (item.category === 'shirt' ? 'Shirt' : 'Jacket') + (item.sample ? '\nSAMPLE · illustrative preview' : '\nYouCam-generated preview') + '\nPhoto thumbnails saved on this device')
+    const generatedByYouCam = item.generatedByYouCam ?? !item.sample
+    const provenance = generatedByYouCam
+      ? item.syntheticInputs ? '\nYouCam-generated · sample input photos' : '\nYouCam-generated preview'
+      : '\nSAMPLE · illustrative preview'
+    this.ui.renderSaved(garment, preview, (item.category === 'shirt' ? 'Shirt' : 'Jacket') + provenance + '\nPhoto thumbnails saved on this device')
   }
 
   private refresh(): void {
