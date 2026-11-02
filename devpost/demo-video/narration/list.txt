@@ -1,0 +1,1 @@
+Local storage keeps J peg thumbnails instead of expiring links. I open a saved item to see both photos. Clearing the list requires confirmation.

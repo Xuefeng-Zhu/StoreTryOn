@@ -1,0 +1,18 @@
+[
+  {
+    "text": "Capture, try on, save. Preview appearance.",
+    "startMs": 250,
+    "endMs": 2886,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "Check fit in store.",
+    "startMs": 2886,
+    "endMs": 4644,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  }
+]

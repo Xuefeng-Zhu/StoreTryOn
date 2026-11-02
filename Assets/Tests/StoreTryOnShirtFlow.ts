@@ -13,6 +13,7 @@ export class StoreTryOnShirtFlow extends Scenario {
     const shopper = h.main.state.shopper
     await h.tap('AddToList')
     expect(h.main.getSnapshot().savedCount).toBe(before + 1)
+    expect(h.main.getSnapshot().savedCurrent).toBe(true)
     const stored = new StoreTryOnStorage().read()
     expect(stored.length).toBe(before + 1)
     const item = stored[stored.length - 1]
@@ -21,11 +22,15 @@ export class StoreTryOnShirtFlow extends Scenario {
     expect(item.generatedByYouCam).toBe(false)
     expect(item.syntheticInputs).toBe(true)
     await StoreTryOnHarness.assertSavedImages(item)
-    await h.tap('AddToList')
+    expect(h.canActivate('AddToList')).toBe(false)
     expect(h.main.getSnapshot().savedCount).toBe(before + 1)
-    expect(h.main.getSnapshot().message.includes('already in your shopping list')).toBe(true)
     expect(h.main.state.shopper === shopper).toBe(true)
     expect(new StoreTryOnStorage().read().length).toBe(before + 1)
-    print('[StoreTryOn LEAF] Shirt capture → sample preview → SIK Add passed; JPEG pixels persisted; duplicate prevented. No live API claim.')
+    await h.tap('TryAnother')
+    await h.screen('garment')
+    expect(h.main.state.shopper === shopper).toBe(true)
+    expect(h.main.getSnapshot().garmentReady).toBe(false)
+    expect(h.main.getSnapshot().previewReady).toBe(false)
+    print('[StoreTryOn LEAF] Guided shirt → illustration → Add passed; saved Add disabled and Try another reuses the shopper. No live API claim.')
   }
 }

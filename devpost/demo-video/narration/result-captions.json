@@ -1,0 +1,42 @@
+[
+  {
+    "text": "The returned image is a real",
+    "startMs": 250,
+    "endMs": 1956,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "YouCam result. I compare it with",
+    "startMs": 1956,
+    "endMs": 3661,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "the garment, then add it to",
+    "startMs": 3661,
+    "endMs": 5367,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "my shopping list. A second tap",
+    "startMs": 5367,
+    "endMs": 7072,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "cannot save the same result twice.",
+    "startMs": 7072,
+    "endMs": 8778,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "text": "I select Shirt and load the",
+    "startMs": 250,
+    "endMs": 2094,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "garment photo. The review lets me",
+    "startMs": 2094,
+    "endMs": 3937,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "inspect it before sending. Only Try",
+    "startMs": 3937,
+    "endMs": 5781,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "it on starts an API request.",
+    "startMs": 5781,
+    "endMs": 7624,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  }
+]

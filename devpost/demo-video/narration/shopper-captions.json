@@ -1,0 +1,42 @@
+[
+  {
+    "text": "This walkthrough is Lens Studio’s SPECS",
+    "startMs": 250,
+    "endMs": 2239,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "preview, using clearly labelled synthetic photos.",
+    "startMs": 2239,
+    "endMs": 4227,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "I load the shopper photo once.",
+    "startMs": 4227,
+    "endMs": 6216,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "The Lens reuses it for the",
+    "startMs": 6216,
+    "endMs": 8204,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "rest of the visit.",
+    "startMs": 8204,
+    "endMs": 9530,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  }
+]

@@ -1,0 +1,118 @@
+{
+  "source": "/private/tmp/storetryon-demo-capture/free-walkthrough.webm",
+  "captureMetadata": "/private/tmp/storetryon-demo-capture/free-walkthrough.json",
+  "durationSeconds": 201.3,
+  "dimensions": {
+    "width": 2880,
+    "height": 1520
+  },
+  "fps": 30,
+  "decodedFrames": 6039,
+  "decodePassed": true,
+  "crop": {
+    "x": 1608,
+    "y": 268,
+    "width": 1264,
+    "height": 1144
+  },
+  "timing": "Times identify observed source-video frames, not input or scenario event timestamps.",
+  "provenance": "Lens Studio Preview; sample photos; free illustrative generation, not YouCam output.",
+  "observedActivity": {
+    "initialPreparationSeconds": "0–109 approximately",
+    "guidedViewsSeconds": "110–159 approximately",
+    "finalHeldErrorSeconds": "160–201.3 approximately"
+  },
+  "stages": [
+    {
+      "stage": "shopper",
+      "sourceSeconds": 111,
+      "path": "/private/tmp/storetryon-demo-capture/free-stage-shopper.png",
+      "observed": true
+    },
+    {
+      "stage": "shopper-review",
+      "sourceSeconds": 115,
+      "path": "/private/tmp/storetryon-demo-capture/free-stage-shopper-review.png",
+      "observed": true
+    },
+    {
+      "stage": "garment",
+      "sourceSeconds": 120,
+      "path": "/private/tmp/storetryon-demo-capture/free-stage-garment.png",
+      "observed": true
+    },
+    {
+      "stage": "review",
+      "sourceSeconds": 124,
+      "path": "/private/tmp/storetryon-demo-capture/free-stage-review.png",
+      "observed": true
+    },
+    {
+      "stage": "generating-illustration",
+      "sourceSeconds": 127,
+      "path": "/private/tmp/storetryon-demo-capture/free-stage-generating-illustration.png",
+      "observed": true
+    },
+    {
+      "stage": "result",
+      "sourceSeconds": 130,
+      "path": "/private/tmp/storetryon-demo-capture/free-stage-result.png",
+      "observed": true
+    },
+    {
+      "stage": "saved",
+      "sourceSeconds": 134,
+      "path": "/private/tmp/storetryon-demo-capture/free-stage-saved.png",
+      "observed": true
+    },
+    {
+      "stage": "list",
+      "sourceSeconds": 139,
+      "path": "/private/tmp/storetryon-demo-capture/free-stage-list.png",
+      "observed": true
+    },
+    {
+      "stage": "item",
+      "sourceSeconds": 143,
+      "path": "/private/tmp/storetryon-demo-capture/free-stage-item.png",
+      "observed": true
+    },
+    {
+      "stage": "clear",
+      "sourceSeconds": 148,
+      "path": "/private/tmp/storetryon-demo-capture/free-stage-clear.png",
+      "observed": true
+    },
+    {
+      "stage": "settings",
+      "sourceSeconds": 152,
+      "path": "/private/tmp/storetryon-demo-capture/free-stage-settings.png",
+      "observed": true
+    },
+    {
+      "stage": "error",
+      "sourceSeconds": 158,
+      "path": "/private/tmp/storetryon-demo-capture/free-stage-error.png",
+      "observed": true
+    }
+  ],
+  "contactSheets": [
+    {
+      "path": "/private/tmp/storetryon-demo-capture/free-contact-labeled-01.png",
+      "intervalSeconds": 5
+    },
+    {
+      "path": "/private/tmp/storetryon-demo-capture/free-contact-labeled-02.png",
+      "intervalSeconds": 5
+    },
+    {
+      "path": "/private/tmp/storetryon-demo-capture/free-contact-labeled-03.png",
+      "intervalSeconds": 5
+    }
+  ],
+  "notes": [
+    "All 11 requested walkthrough stages are visibly present. Generating illustration is included as a bonus 12th view.",
+    "LEAF overlay is absent during the useful guided walkthrough.",
+    "Keep raw recording and metadata; trims/crops are derived assets."
+  ]
+}

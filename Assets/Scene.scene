@@ -6,7 +6,7 @@
     - !<own> f5d74682-203a-4970-81ea-9fa7b88c96bb
     - !<own> 2d1837ba-f1a3-4ad3-97b3-2867e6ec4f89
     - !<own> f7f790f4-f94b-4802-bbe9-98f80e4a9b18
-    - !<own> dee0251b-d9c5-4020-84c8-d862be986339
+    - !<own> 0c8f0808-18a5-4ff6-9478-ad5c50ba19db
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - id: 1
@@ -382,6 +382,21 @@
     - !<own> d90b4bdf-2fbf-4edc-afa1-d23c2d5ba257
   Components:
     []
+- !<SceneObject/0c8f0808-18a5-4ff6-9478-ad5c50ba19db>
+  PrefabRemaps:
+    []
+  Name: LEAF Plugin Bridge
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> abfb33ff-b130-43e0-8df4-dc211127a3f6
 - !<SceneObject/0cffb60e-73f6-43c5-bb4f-286d39e0f1f6>
   PrefabRemaps:
     []
@@ -1825,6 +1840,22 @@
     - !<own> f6687ab7-52ac-408d-a892-8a9559125450
   Components:
     []
+- !<ScriptComponent/abfb33ff-b130-43e0-8df4-dc211127a3f6>
+  PrefabRemaps:
+    []
+  Name: MessagingBridge
+  Enabled: true
+  ScriptAsset: !<reference> 14c2c8b9-30f5-4dc9-be84-04d20d4eab77
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      {}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/b22d97e6-4c06-4135-af29-d26adb2b9d86>
   PrefabRemaps:
     []
@@ -2026,22 +2057,6 @@
   Name: LeafIndex
   Enabled: true
   ScriptAsset: !<reference> 06c8cf7b-44f6-4ffa-9e30-26059d99f0bd
-  ScriptInputsDefault:
-    {}
-  ScriptTypesDefault:
-    {}
-  ScriptInputs:
-    "":
-      {}
-  ScriptTypes:
-    "":
-      {}
-- !<ScriptComponent/c2ee3897-2f25-493e-b3ce-bc38ff1cbd9d>
-  PrefabRemaps:
-    []
-  Name: MessagingBridge
-  Enabled: true
-  ScriptAsset: !<reference> 14c2c8b9-30f5-4dc9-be84-04d20d4eab77
   ScriptInputsDefault:
     {}
   ScriptTypesDefault:
@@ -2362,21 +2377,6 @@
     - !<own> d4a9c5e3-fe96-4824-9b20-59f5ad39eabd
   Components:
     []
-- !<SceneObject/dee0251b-d9c5-4020-84c8-d862be986339>
-  PrefabRemaps:
-    []
-  Name: LEAF Plugin Bridge
-  Enabled: true
-  Layers: 1
-  LocalTransform: !<TransformEntity>
-    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
-    HasSegmentScaleCompensation: false
-  Children:
-    []
-  Components:
-    - !<own> c2ee3897-2f25-493e-b3ce-bc38ff1cbd9d
 - !<RenderMeshVisual/e1031f7e-3474-489f-a529-282f7192f812>
   PrefabRemaps:
     []
@@ -2497,8 +2497,6 @@
   Enabled: true
   ScriptAsset: !<reference> ab1d6f09-c054-47cc-aceb-f327bfda7a1f
   ScriptInputsDefault:
-    panelWidth: true
-    panelHeight: true
     textColor: true
     accentColor: true
     title: true
@@ -2506,8 +2504,8 @@
     {}
   ScriptInputs:
     "":
-      panelWidth: !<float> 46.000000
-      panelHeight: !<float> 64.000000
+      panelWidth: !<float> 44.000000
+      panelHeight: !<float> 54.000000
       textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
       accentColor: !<Vec4> {x: 0.520000, y: 0.920000, z: 0.780000, w: 1.000000}
       title: StoreTryOn

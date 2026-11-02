@@ -1,0 +1,50 @@
+[
+  {
+    "id": "intro",
+    "duration": 8,
+    "spoken": "StoreTryOn helps shoppers preview a shirt or jacket, then keep a shopping list, all in a SPECS Lens.",
+    "captions": "StoreTryOn helps shoppers preview a shirt or jacket, then keep a shopping list, all in a SPECS Lens."
+  },
+  {
+    "id": "shopper",
+    "duration": 14,
+    "spoken": "This walkthrough is Lens Studio's SPECS preview, using clearly labelled synthetic photos. I load the shopper photo once. The Lens reuses it for the rest of the visit.",
+    "captions": "This walkthrough is Lens Studio\u2019s SPECS preview, using clearly labelled synthetic photos. I load the shopper photo once. The Lens reuses it for the rest of the visit."
+  },
+  {
+    "id": "garment",
+    "duration": 14,
+    "spoken": "I select Shirt and load the garment photo. The review lets me inspect it before sending. Only Try it on starts an API request.",
+    "captions": "I select Shirt and load the garment photo. The review lets me inspect it before sending. Only Try it on starts an API request."
+  },
+  {
+    "id": "generation",
+    "duration": 30,
+    "spoken": "That action sends both photos over H T T P S to the protected proxy, which keeps the You Cam key on the server. It uploads the images, creates a Clothes version four task, polls for completion, and downloads the result. The on screen stages reflect that work, with no fake percentage.",
+    "captions": "That action sends both photos over HTTPS to the protected proxy, which keeps the YouCam key on the server. It uploads the images, creates a Clothes V4 task, polls for completion, and downloads the result. The on-screen stages reflect that work, with no fake percentage."
+  },
+  {
+    "id": "result",
+    "duration": 18,
+    "spoken": "The returned image is a real You Cam result. I compare it with the garment, then add it to my shopping list. A second tap cannot save the same result twice.",
+    "captions": "The returned image is a real YouCam result. I compare it with the garment, then add it to my shopping list. A second tap cannot save the same result twice."
+  },
+  {
+    "id": "list",
+    "duration": 14,
+    "spoken": "Local storage keeps J peg thumbnails instead of expiring links. I open a saved item to see both photos. Clearing the list requires confirmation.",
+    "captions": "Local storage keeps JPEG thumbnails instead of expiring links. I open a saved item to see both photos. Clearing the list requires confirmation."
+  },
+  {
+    "id": "api",
+    "duration": 10,
+    "spoken": "You Cam A I Clothes version four uses upper body for shirts and outer for jackets, layering jackets over the existing outfit.",
+    "captions": "YouCam AI Clothes V4 uses upper_body for shirts and outer for jackets, layering jackets over the existing outfit."
+  },
+  {
+    "id": "outro",
+    "duration": 6,
+    "spoken": "Capture, try on, save. Preview appearance. Check fit in store.",
+    "captions": "Capture, try on, save. Preview appearance. Check fit in store."
+  }
+]

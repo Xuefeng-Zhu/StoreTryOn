@@ -1,0 +1,33 @@
+{
+  "include": [
+    "package.json",
+    "package-lock.json",
+    "tsconfig.json",
+    "remotion.config.ts",
+    ".gitignore",
+    "README.md",
+    "storyboard.md",
+    "media-status.json",
+    "src/",
+    "public/",
+    "scripts/",
+    "narration/*.json",
+    "narration/*.txt",
+    "verification.json",
+    "storetryon-demo-contact-sheet.png",
+    "eslint.config.mjs",
+    ".prettierrc",
+    "copy-manifest.json",
+    "storetryon-demo.srt"
+  ],
+  "exclude": [
+    "node_modules/",
+    ".git/",
+    "out/",
+    "narration/*.aiff",
+    "raw window recordings",
+    "local private configuration"
+  ],
+  "finalVideo": "out/storetryon-demo.mp4",
+  "optionalCaptions": "out/storetryon-demo.srt"
+}

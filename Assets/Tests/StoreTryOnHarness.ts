@@ -2,10 +2,11 @@ import {DefaultLeafInteractor} from 'Leaf.lspkg/Interactors/interactor/DefaultLe
 import {findSceneObjectByName, sleep} from 'Leaf.lspkg/Utils/common/Utils'
 import {expect} from 'Leaf.lspkg/Utils/common/Expect'
 import {Button} from 'SpectaclesUIKit.lspkg/Scripts/Components/Button/Button'
+import {ScrollWindow} from 'SpectaclesUIKit.lspkg/Scripts/Components/ScrollWindow/ScrollWindow'
 import {Interactable} from 'SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable'
 import {StoreTryOnMain} from '../Scripts/StoreTryOnMain'
 import {StoreTryOnAction} from '../Scripts/StoreTryOnPanelUI'
-import {StoredShoppingItem} from '../Scripts/StoreTryOnState'
+import {StoredShoppingItem, StoreTryOnScreen} from '../Scripts/StoreTryOnState'
 import {StoreTryOnStorage} from '../Scripts/StoreTryOnStorage'
 
 // Changes whenever the Lens runtime is actually restarted. It lets a persistence
@@ -27,7 +28,7 @@ export class StoreTryOnHarness {
     const main = root.getComponent(StoreTryOnMain.getTypeName()) as StoreTryOnMain | null
     if (!main) throw new Error('StoreTryOnMain is not attached to StoreTryOn.')
     const harness = new StoreTryOnHarness(main, root)
-    await harness.until(() => main.getControl('ShopperPhoto') !== null, 'UIKit controls initialize')
+    await harness.until(() => !!main.ui && main.ui.ready, 'UIKit initializes')
     await harness.idle()
     // Existing functional scenarios are explicitly free. Live UI scenarios
     // opt out so they can inspect the normal startup mode before any action.
@@ -47,11 +48,23 @@ export class StoreTryOnHarness {
     return button.interactable
   }
 
+  canActivate(action: StoreTryOnAction): boolean {
+    const object = this.main.getControl(action)
+    if (!object || !object.isEnabledInHierarchy) return false
+    const button = object.getComponent(Button.getTypeName()) as Button | null
+    return !!button && !!button.interactable && button.interactable.enabled && button.interactable.colliders.length > 0
+  }
+
+  async press(action: StoreTryOnAction): Promise<void> {
+    await this.until(() => this.canActivate(action), 'active visible control ' + action)
+    await this.interactor.trigger(this.target(action))
+  }
+
   async tap(action: StoreTryOnAction, timeoutMs = 15000): Promise<void> {
     // Exercise SIK targeting and UIKit's trigger-up binding. Never call the
     // controller's handleAction() or invoke the UI action event directly.
-    await this.interactor.trigger(this.target(action))
-    await sleep(100)
+    await this.press(action)
+    await sleep(50)
     await this.idle(timeoutMs)
   }
 
@@ -66,50 +79,94 @@ export class StoreTryOnHarness {
   async idle(timeoutMs = 15000): Promise<void> { await this.until(() => !this.main.getSnapshot().busy, 'action completion', timeoutMs) }
 
   async capturePage(): Promise<void> {
-    if (this.main.getSnapshot().listOpen) await this.tap('Back')
+    for (let i = 0; i < 5; i++) {
+      const snapshot = this.main.getSnapshot()
+      if (snapshot.clearConfirmation) { await this.tap('CancelClear'); continue }
+      if (snapshot.screen === 'list' || snapshot.screen === 'item' || snapshot.screen === 'settings') { await this.tap('Back'); continue }
+      break
+    }
     expect(this.main.getSnapshot().listOpen).toBe(false)
   }
 
+  async screen(screen: StoreTryOnScreen): Promise<void> {
+    await this.until(() => this.main.getSnapshot().screen === screen, 'screen ' + screen)
+    expect(this.main.getSnapshot().screen).toBe(screen)
+  }
+
+  async settings(): Promise<void> {
+    if (this.main.getSnapshot().screen !== 'settings') {
+      await this.capturePage()
+      await this.tap('Settings')
+    }
+    await this.screen('settings')
+  }
+
   async sampleMode(): Promise<void> {
-    await this.capturePage()
+    await this.settings()
     // In editor, ToggleMode changes generation mode; inputs remain synthetic.
     // Selecting sample inputs alone no longer guarantees a free illustration.
     expect(this.main.getSnapshot().isEditor).toBe(true)
     expect(this.main.getSnapshot().sampleMode).toBe(true)
     if (this.main.getSnapshot().useLiveApi) await this.tap('ToggleMode')
     expect(this.main.getSnapshot().useLiveApi).toBe(false)
-    expect(this.visibleTextContains('SAMPLE MODE')).toBe(true)
-    expect(this.visibleTextContains('no API requests')).toBe(true)
+    await this.tap('Back')
+    expect(this.main.getSnapshot().screen === 'settings').toBe(false)
   }
 
   async freshVisit(): Promise<void> {
     await this.sampleMode()
-    // Both controls are real UI operations; the list is intentionally retained.
-    await this.tap('ToggleMode')
-    await this.tap('ToggleMode')
-    expect(this.main.getSnapshot().shopperReady).toBe(false)
-    expect(this.main.getSnapshot().garmentReady).toBe(false)
-    expect(this.main.getSnapshot().previewReady).toBe(false)
+    await this.newVisit()
     expect(this.main.getSnapshot().useLiveApi).toBe(false)
   }
 
-  async shirtResult(): Promise<void> {
-    await this.sampleMode()
-    await this.tap('Shirt')
-    if (!this.main.getSnapshot().shopperReady) await this.tap('ShopperPhoto')
+  async newVisit(): Promise<void> {
+    const before = this.main.getSnapshot().savedCount
+    await this.settings()
+    await this.tap('NewVisit')
+    await this.screen('shopper')
+    expect(this.main.getSnapshot().shopperReady).toBe(false)
+    expect(this.main.getSnapshot().garmentReady).toBe(false)
+    expect(this.main.getSnapshot().previewReady).toBe(false)
+    expect(this.main.getSnapshot().savedCount).toBe(before)
+  }
+
+  async reviewGarment(category: 'shirt' | 'jacket' = 'shirt'): Promise<void> {
+    await this.capturePage()
+    const initial = this.main.getSnapshot().screen
+    if (initial === 'result') await this.tap('TryAnother')
+    else if (initial === 'review') await this.tap('RetakeGarment')
+    if (this.main.getSnapshot().screen === 'shopper') {
+      if (!this.main.getSnapshot().shopperReady) await this.tap('ShopperPhoto')
+      await this.until(() => this.canActivate('Continue'), 'shopper review controls')
+      this.assertPhotoRole('StoreTryOn.ShopperPhotoCard')
+      await this.tap('Continue')
+    }
+    await this.screen('garment')
+    if (this.main.getSnapshot().category !== category) await this.tap(category === 'shirt' ? 'Shirt' : 'Jacket')
     await this.tap('CaptureGarment')
+    await this.screen('review')
+    expect(this.main.getSnapshot().shopperReady).toBe(true)
+    expect(this.main.getSnapshot().garmentReady).toBe(true)
+    await this.until(() => this.canActivate('RetakeGarment'), 'garment review controls')
+    this.assertPhotoRole('StoreTryOn.GarmentPhotoCard')
+  }
+
+  async shirtResult(): Promise<void> {
+    await this.freshVisit()
+    await this.reviewGarment('shirt')
     await this.tap('TryOn')
     const snapshot = this.main.getSnapshot()
     expect(snapshot.phase).toBe('result')
     expect(snapshot.previewReady).toBe(true)
     expect(snapshot.useLiveApi).toBe(false)
     expect(snapshot.previewFromLiveApi).toBe(false)
-    expect(snapshot.message.includes('NOT a live YouCam result')).toBe(true)
-    expect(this.visibleTextContains('NOT YouCam')).toBe(true)
-    expect(this.visiblePhotos().length).toBe(2)
+    expect(snapshot.screen).toBe('result')
+    expect(this.visibleTextContains('not generated by YouCam')).toBe(true)
+    this.assertPhotoRole('StoreTryOn.TryOnPreviewCard')
   }
 
   requireCapacity(slots: number): void {
+    if (!this.main.getSnapshot().storageReady) throw new Error('Test precondition: saved list must be readable before adding fixture entries.')
     if (this.main.getSnapshot().savedCount + slots > this.main.maxItems) {
       throw new Error('Test precondition: ' + slots + ' free shopping-list slots required. Existing entries were preserved.')
     }
@@ -131,6 +188,37 @@ export class StoreTryOnHarness {
     expect(this.main.getSnapshot().savedCount).toBe(1)
   }
 
+  async openList(): Promise<void> {
+    if (this.main.getSnapshot().screen === 'item') await this.tap('Back')
+    if (this.main.getSnapshot().screen !== 'list') {
+      await this.capturePage()
+      await this.tap('ShoppingList')
+    }
+    await this.screen('list')
+  }
+
+  async openItem(index: number): Promise<void> {
+    await this.openList()
+    const action = ('OpenItem:' + index) as StoreTryOnAction
+    await this.until(() => {
+      if (this.canActivate(action)) return true
+      const host = this.main.ui.getCollectionScroll()
+      const scroll = host?.getComponent(ScrollWindow.getTypeName()) as ScrollWindow | null
+      return !!scroll && scroll.initialized
+    }, 'collection layout initializes')
+    for (let attempt = 0; attempt < 10 && !this.canActivate(action); attempt++) {
+      const host = this.main.ui.getCollectionScroll()
+      const scroll = host?.getComponent(ScrollWindow.getTypeName()) as ScrollWindow | null
+      if (!scroll || !scroll.initialized || !scroll.interactable) throw new Error('Visible collection ScrollWindow is not initialized.')
+      await this.interactor.drag(scroll.interactable, new vec3(0, 8, 0), 400)
+      await sleep(100)
+    }
+    if (!this.canActivate(action)) throw new Error('Saved item ' + index + ' is not reachable through the actual collection scroll.')
+    await this.tap(action)
+    await this.screen('item')
+    await this.until(() => this.visiblePhotos().length > 0 || this.visibleTextContains('could not be opened'), 'saved item photos decode')
+  }
+
   visibleTextContains(fragment: string): boolean {
     return this.objects().some(object => {
       if (!object.isEnabledInHierarchy) return false
@@ -143,6 +231,20 @@ export class StoreTryOnHarness {
     return this.objects().filter(object => object.name === 'StoreTryOn.PhotoPixels' && object.isEnabledInHierarchy)
       .map(object => object.getComponent('Component.Image') as Image | null)
       .filter(image => image !== null && image.enabled) as Image[]
+  }
+
+  assertPhotoRole(role: string): Image {
+    const image = this.visiblePhotos().find(photo => {
+      let object: SceneObject | null = photo.sceneObject
+      while (object) {
+        if (object.name === role) return true
+        object = object.getParent()
+      }
+      return false
+    })
+    if (!image) throw new Error('Missing visible photo role ' + role + ' on screen ' + this.main.getSnapshot().screen)
+    expect(image.mainPass.baseTex !== null).toBe(true)
+    return image
   }
 
   private objects(): SceneObject[] {

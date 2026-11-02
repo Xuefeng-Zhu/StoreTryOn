@@ -1,0 +1,34 @@
+[
+  {
+    "text": "Local storage keeps JPEG thumbnails instead",
+    "startMs": 250,
+    "endMs": 2494,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "of expiring links. I open a",
+    "startMs": 2494,
+    "endMs": 4737,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "saved item to see both photos.",
+    "startMs": 4737,
+    "endMs": 6981,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "Clearing the list requires confirmation.",
+    "startMs": 6981,
+    "endMs": 8851,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  }
+]

@@ -8,10 +8,11 @@ export class StoreTryOnPersistenceVerify extends Scenario {
     const h = await StoreTryOnHarness.open()
     await h.verifyCheckpoint('seeded')
     expect(h.main.getSnapshot().shopperReady).toBe(false)
-    await h.capturePage()
-    await h.tap('ShoppingList')
+    await h.openList()
     expect(h.main.getSnapshot().listOpen).toBe(true)
-    expect(h.visiblePhotos().length).toBe(2)
-    expect(h.visibleTextContains('Photo thumbnails saved on this device')).toBe(true)
+    await h.openItem(0)
+    h.assertPhotoRole('StoreTryOn.GarmentPhotoCard')
+    h.assertPhotoRole('StoreTryOn.TryOnPreviewCard')
+    expect(h.visibleTextContains('saved on this device')).toBe(true)
   }
 }

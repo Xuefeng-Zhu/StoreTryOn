@@ -13,11 +13,19 @@ import {StoreTryOnNetworkProbe} from './StoreTryOnNetworkProbe'
 import {StoreTryOnLiveNetwork} from './StoreTryOnLiveNetwork'
 import {StoreTryOnLiveDefault} from './StoreTryOnLiveDefault'
 import {StoreTryOnLiveUI} from './StoreTryOnLiveUI'
+import {StoreTryOnGuidedNavigation} from './StoreTryOnGuidedNavigation'
+import {StoreTryOnBackgroundGeneration} from './StoreTryOnBackgroundGeneration'
+import {StoreTryOnVisualCheck} from './StoreTryOnVisualCheck'
+import {StoreTryOnTransportRecovery} from './StoreTryOnTransportRecovery'
 
 @component
 export class LeafIndex extends BaseScriptComponent {
   @scenariosIndex
   static scenariosIndex: ScenarioMetadata[] = [
+    {id: 'storetryon-transport-recovery', typename: StoreTryOnTransportRecovery.getTypeName(), parameters: {__leaf__timeout_secs: '60'}},
+    {id: 'storetryon-guided-navigation', typename: StoreTryOnGuidedNavigation.getTypeName()},
+    {id: 'storetryon-background-generation', typename: StoreTryOnBackgroundGeneration.getTypeName()},
+    {id: 'storetryon-visual-check', typename: StoreTryOnVisualCheck.getTypeName(), parameters: {screen: 'shopper', __leaf__timeout_secs: '90'}},
     {id: 'storetryon-shirt-flow', typename: StoreTryOnShirtFlow.getTypeName()},
     {id: 'storetryon-jacket-reuse', typename: StoreTryOnJacketReuse.getTypeName()},
     {id: 'storetryon-guard-retry', typename: StoreTryOnGuardRetry.getTypeName()},
@@ -31,7 +39,7 @@ export class LeafIndex extends BaseScriptComponent {
       confirmLiveRequest: 'false', __leaf__timeout_secs: '360',
     }},
     {id: 'storetryon-live-default', typename: StoreTryOnLiveDefault.getTypeName(), parameters: {
-      restartCheck: 'record', __leaf__timeout_secs: '60',
+      restartCheck: 'record', expectServiceReady: 'auto', __leaf__timeout_secs: '60',
     }},
     {id: 'storetryon-live-ui', typename: StoreTryOnLiveUI.getTypeName(), parameters: {
       confirmLiveRequest: 'false', __leaf__timeout_secs: '360',

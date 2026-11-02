@@ -1,0 +1,66 @@
+[
+  {
+    "text": "That action sends both photos over",
+    "startMs": 250,
+    "endMs": 2549,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "HTTPS to the protected proxy, which",
+    "startMs": 2549,
+    "endMs": 4849,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "keeps the YouCam key on the",
+    "startMs": 4849,
+    "endMs": 7148,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "server. It uploads the images, creates",
+    "startMs": 7148,
+    "endMs": 9447,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "a Clothes V4 task, polls for",
+    "startMs": 9447,
+    "endMs": 11747,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "completion, and downloads the result. The",
+    "startMs": 11747,
+    "endMs": 14046,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "on-screen stages reflect that work, with",
+    "startMs": 14046,
+    "endMs": 16345,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "no fake percentage.",
+    "startMs": 16345,
+    "endMs": 17495,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  }
+]

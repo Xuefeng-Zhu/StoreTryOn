@@ -32,3 +32,10 @@ coverage/
 
 # Added by Lens Studio (LEAF plugin)
 leaf_plugin_settings.json
+
+# Local Devpost entrant answers and workflow state
+.devpost-hackathon-state.json
+devpost/submission-answers-draft.json
+
+# Private hosting CLI context
+.insta/

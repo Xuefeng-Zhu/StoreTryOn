@@ -1,0 +1,49 @@
+{
+  "composition": "StoreTryOnDemo",
+  "durationSeconds": 114,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "status": "final-render-verified-ready-for-public-upload",
+  "previewLabel": "Lens Studio \u00b7 SPECS preview",
+  "syntheticInputsDisclosed": true,
+  "physicalDeviceFootageClaimed": false,
+  "audio": "Offline macOS Samantha voice; no music",
+  "sourceFootage": [
+    "public/media/live-flow.mp4"
+  ],
+  "liveFootage": {
+    "rawSourceBasename": "live-youcam-success.webm",
+    "rawDurationSeconds": 172.133,
+    "derivedStartSeconds": 89,
+    "derivedDurationSeconds": 52,
+    "crop": {
+      "x": 1608,
+      "y": 268,
+      "width": 1264,
+      "height": 1144
+    },
+    "generationObservedSourceSeconds": [
+      92.8,
+      122.8
+    ],
+    "generationPlaybackRate": 1,
+    "rootNativeUiTest": "storetryon-live-ui PASSED",
+    "inputPlaybackRate": 0.25,
+    "inputHoldsLabelled": true,
+    "resultAndListHoldsLabelled": true
+  },
+  "earlierOutputs": [
+    "public/media/shirt-youcam-live.jpg",
+    "public/media/jacket-youcam-live.jpg"
+  ],
+  "pending": [
+    "public upload owned by root"
+  ],
+  "failedAttemptPresentedAsSuccess": false,
+  "narrationGain": 0.5,
+  "finalAudioProcessing": "Narration attenuated before final AAC delivery; rendered H264 video copied without re-encoding.",
+  "verification": "verification.json",
+  "finalFile": "out/storetryon-demo.mp4",
+  "sha256": "b4df0ca065b28faa27a452d9fe36e4e894ca7ad9794964d91930764c162ac055"
+}

@@ -1,0 +1,120 @@
+{
+  "file": "storetryon-demo.mp4",
+  "sha256": "b4df0ca065b28faa27a452d9fe36e4e894ca7ad9794964d91930764c162ac055",
+  "bytes": 5882035,
+  "durationSeconds": 114.005,
+  "frames": 3420,
+  "width": 1920,
+  "height": 1080,
+  "fps": "30/1",
+  "videoCodec": "h264",
+  "pixelFormat": "yuvj420p",
+  "audioCodec": "aac",
+  "audioChannels": 2,
+  "audioSampleRate": 48000,
+  "fullDecodePassed": true,
+  "decodeErrors": "",
+  "blackDetect": {
+    "minimumSeconds": 0.1,
+    "pixelThreshold": 0.1,
+    "pictureThreshold": 0.98,
+    "intervals": []
+  },
+  "audioPeakDbfs": -4.774,
+  "audioClippedSamples": 0,
+  "allNarrationTracksFit": true,
+  "narration": [
+    {
+      "id": "intro",
+      "voice": "Samantha",
+      "source": "local macOS say",
+      "rateWordsPerMinute": 170,
+      "audioSeconds": 6.178563,
+      "sceneSeconds": 8,
+      "captionTiming": "Editorial phrase timings proportional to the known synthesized narration; review playback before export."
+    },
+    {
+      "id": "shopper",
+      "voice": "Samantha",
+      "source": "local macOS say",
+      "rateWordsPerMinute": 170,
+      "audioSeconds": 9.529979,
+      "sceneSeconds": 14,
+      "captionTiming": "Editorial phrase timings proportional to the known synthesized narration; review playback before export."
+    },
+    {
+      "id": "garment",
+      "voice": "Samantha",
+      "source": "local macOS say",
+      "rateWordsPerMinute": 170,
+      "audioSeconds": 7.623917,
+      "sceneSeconds": 14,
+      "captionTiming": "Editorial phrase timings proportional to the known synthesized narration; review playback before export."
+    },
+    {
+      "id": "generation",
+      "voice": "Samantha",
+      "source": "local macOS say",
+      "rateWordsPerMinute": 170,
+      "audioSeconds": 17.494521,
+      "sceneSeconds": 30,
+      "captionTiming": "Editorial phrase timings proportional to the known synthesized narration; review playback before export."
+    },
+    {
+      "id": "result",
+      "voice": "Samantha",
+      "source": "local macOS say",
+      "rateWordsPerMinute": 170,
+      "audioSeconds": 8.777604,
+      "sceneSeconds": 18,
+      "captionTiming": "Editorial phrase timings proportional to the known synthesized narration; review playback before export."
+    },
+    {
+      "id": "list",
+      "voice": "Samantha",
+      "source": "local macOS say",
+      "rateWordsPerMinute": 170,
+      "audioSeconds": 8.851167,
+      "sceneSeconds": 14,
+      "captionTiming": "Editorial phrase timings proportional to the known synthesized narration; review playback before export."
+    },
+    {
+      "id": "api",
+      "voice": "Samantha",
+      "source": "local macOS say",
+      "rateWordsPerMinute": 170,
+      "audioSeconds": 7.039792,
+      "sceneSeconds": 10,
+      "captionTiming": "Editorial phrase timings proportional to the known synthesized narration; review playback before export."
+    },
+    {
+      "id": "outro",
+      "voice": "Samantha",
+      "source": "local macOS say",
+      "rateWordsPerMinute": 170,
+      "audioSeconds": 4.643729,
+      "sceneSeconds": 6,
+      "captionTiming": "Editorial phrase timings proportional to the known synthesized narration; review playback before export."
+    }
+  ],
+  "contactSheetFrames": [
+    90,
+    300,
+    840,
+    1110,
+    1500,
+    1950,
+    2025,
+    2100,
+    2550,
+    2670,
+    3000,
+    3330
+  ],
+  "visualReview": "PASS: final 12-frame contact sheet plus full-resolution garment review, processing, result, saved state, item, API diagram, and closing frames inspected; no clipped captions/headlines or editor chrome/private fields visible.",
+  "subjectiveAudioReview": "Not claimed; valid full A/V decode, PCM peak/clipping and measured narration timing checked.",
+  "evidenceBoundary": "Lens Studio SPECS preview with synthetic input photos. Successful real YouCam shirt API call; no physical-device claim. Entire observed processing wait retained at 1x.",
+  "sourceTypecheckPassed": true,
+  "narrationGain": 0.5,
+  "independentCaptureReview": "PASS: source input ranges and Sample photos/YouCam/credits provenance confirmed independently."
+}

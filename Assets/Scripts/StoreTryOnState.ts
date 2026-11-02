@@ -1,5 +1,7 @@
 export type GarmentCategory = 'shirt' | 'jacket'
-export type TryOnPhase = 'ready' | 'capturing' | 'generating' | 'result' | 'error'
+export type TryOnPhase = 'ready' | 'capturing' | 'generating' | 'saving' | 'result' | 'error'
+export type StoreTryOnScreen = 'shopper' | 'garment' | 'review' | 'generating' | 'result' | 'list' | 'item' | 'settings'
+export type RecoveryAction = 'ShopperPhoto' | 'CaptureGarment' | 'TryOn' | 'AddToList'
 export interface StoredShoppingItem {
   id: string
   category: GarmentCategory
@@ -26,6 +28,12 @@ export interface StoreTryOnSnapshot {
   savedCount: number
   selectedIndex: number
   message: string
+  screen: StoreTryOnScreen
+  serviceReady: boolean
+  storageReady: boolean
+  savedCurrent: boolean
+  clearConfirmation: boolean
+  errorAction: RecoveryAction | null
 }
 
 /** Domain state only. Images and controls are owned by the controller/view. */
@@ -39,19 +47,28 @@ export class StoreTryOnState {
   useLiveApi = false
   previewFromLiveApi = false
   isEditor = false
-  listOpen = false
+  screen: StoreTryOnScreen = 'shopper'
+  returnScreen: StoreTryOnScreen = 'shopper'
+  settingsReturnScreen: StoreTryOnScreen = 'shopper'
+  serviceReady = false
+  storageReady = true
+  clearConfirmation = false
+  errorAction: RecoveryAction | null = null
   selectedIndex = 0
   items: StoredShoppingItem[] = []
-  message = 'Choose your photo, then one garment.'
+  message = ''
   captureRevision = 0
   savedRevision = -1
 
-  get busy(): boolean { return this.phase === 'capturing' || this.phase === 'generating' }
+  get busy(): boolean { return this.phase === 'capturing' || this.phase === 'generating' || this.phase === 'saving' }
+  get listOpen(): boolean { return this.screen === 'list' || this.screen === 'item' }
 
   invalidateResult(): void {
     this.preview = null
     this.previewFromLiveApi = false
     this.phase = 'ready'
+    this.errorAction = null
+    this.message = ''
     this.captureRevision++
     this.savedRevision = -1
   }
@@ -65,6 +82,9 @@ export class StoreTryOnState {
       isEditor: this.isEditor,
       listOpen: this.listOpen, savedCount: this.items.length,
       selectedIndex: this.selectedIndex, message: this.message,
+      screen: this.screen, serviceReady: this.serviceReady, storageReady: this.storageReady,
+      savedCurrent: this.preview !== null && this.savedRevision === this.captureRevision,
+      clearConfirmation: this.clearConfirmation, errorAction: this.errorAction,
     }
   }
 }

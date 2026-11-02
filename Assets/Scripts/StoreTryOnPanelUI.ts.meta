@@ -51,8 +51,8 @@
     -
       {}
   InputLines:
-    - '// @input float panelWidth = 46 {"hint":"Spatial window content width, in centimeters.", "widget":"slider", "min":40, "max":48, "step":1}'
-    - '// @input float panelHeight = 64 {"hint":"Spatial window content height, in centimeters.", "widget":"slider", "min":58, "max":70, "step":1}'
-    - '// @input vec4 textColor = {1,1,1,1} {"hint":"White text is visible on the additive SPECS display.", "widget":"color"}'
-    - '// @input vec4 accentColor = {0.52,0.92,0.78,1} {"hint":"Accent color for status and sample labelling.", "widget":"color"}'
-    - '// @input string title = "StoreTryOn" {"hint":"Window title."}'
+    - '// @input float panelWidth = 44 {"hint":"Window content width in centimeters.", "widget":"slider", "min":40, "max":46, "step":1}'
+    - '// @input float panelHeight = 54 {"hint":"Window content height in centimeters.", "widget":"slider", "min":50, "max":60, "step":1}'
+    - '// @input vec4 textColor = {1,1,1,1} {"hint":"Main text color for the optical display.", "widget":"color"}'
+    - '// @input vec4 accentColor = {0.52,0.92,0.78,1} {"hint":"Mint accent for headings, steps, and saved feedback.", "widget":"color"}'
+    - '// @input string title = "StoreTryOn" {"hint":"Brand displayed in the window header."}'

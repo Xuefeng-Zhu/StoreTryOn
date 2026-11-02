@@ -1,0 +1,1 @@
+I select Shirt and load the garment photo. The review lets me inspect it before sending. Only Try it on starts an API request.

@@ -7,11 +7,10 @@ export class StoreTryOnClearRestartVerify extends Scenario {
   async run(): Promise<void> {
     const h = await StoreTryOnHarness.open()
     await h.verifyCheckpoint('cleared')
-    await h.capturePage()
-    await h.tap('ShoppingList')
+    await h.openList()
     expect(h.main.getSnapshot().savedCount).toBe(0)
     expect(h.visiblePhotos().length).toBe(0)
-    expect(h.visibleTextContains('No saved items yet')).toBe(true)
-    await h.tap('Back')
+    expect(h.canActivate('OpenItem:0')).toBe(false)
+    expect(h.main.getSnapshot().clearConfirmation).toBe(false)
   }
 }

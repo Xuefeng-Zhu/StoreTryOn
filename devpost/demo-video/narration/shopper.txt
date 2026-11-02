@@ -1,0 +1,1 @@
+This walkthrough is Lens Studio's SPECS preview, using clearly labelled synthetic photos. I load the shopper photo once. The Lens reuses it for the rest of the visit.

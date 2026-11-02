@@ -1,0 +1,26 @@
+[
+  {
+    "text": "StoreTryOn helps shoppers preview a shirt",
+    "startMs": 250,
+    "endMs": 2226,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "or jacket, then keep a shopping",
+    "startMs": 2226,
+    "endMs": 4203,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "list, all in a SPECS Lens.",
+    "startMs": 4203,
+    "endMs": 6179,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  }
+]

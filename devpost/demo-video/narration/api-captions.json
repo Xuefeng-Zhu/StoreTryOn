@@ -1,0 +1,26 @@
+[
+  {
+    "text": "YouCam AI Clothes V4 uses upper_body",
+    "startMs": 250,
+    "endMs": 2513,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "for shirts and outer for jackets,",
+    "startMs": 2513,
+    "endMs": 4777,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  },
+  {
+    "text": "layering jackets over the existing outfit.",
+    "startMs": 4777,
+    "endMs": 7040,
+    "timestampMs": null,
+    "confidence": null,
+    "pageBreakAfter": true
+  }
+]

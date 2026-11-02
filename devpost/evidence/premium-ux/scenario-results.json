@@ -1,0 +1,168 @@
+[
+  {
+    "scenarioId": "storetryon-shirt-flow",
+    "status": "succeeded",
+    "target": "preview"
+  },
+  {
+    "scenarioId": "storetryon-jacket-reuse",
+    "result": "{\"scenarioId\":\"storetryon-jacket-reuse\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-guard-retry",
+    "result": "{\"scenarioId\":\"storetryon-guard-retry\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-guided-navigation",
+    "result": "{\"scenarioId\":\"storetryon-guided-navigation\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-background-generation",
+    "result": "Tool execution failed: Widget is not initialized"
+  },
+  {
+    "scenarioId": "storetryon-background-generation",
+    "result": "{\"scenarioId\":\"storetryon-background-generation\",\"status\":\"failed\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-background-generation",
+    "result": "{\"scenarioId\":\"storetryon-background-generation\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-persistence-seed",
+    "result": "{\"scenarioId\":\"storetryon-persistence-seed\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-persistence-verify",
+    "result": "{\"scenarioId\":\"storetryon-persistence-verify\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-list-navigation",
+    "result": "{\"scenarioId\":\"storetryon-list-navigation\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-ik-reach",
+    "result": "{\"scenarioId\":\"storetryon-ik-reach\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-persistence-seed",
+    "result": "{\"scenarioId\":\"storetryon-persistence-seed\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-persistence-verify",
+    "result": "{\"scenarioId\":\"storetryon-persistence-verify\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-list-navigation",
+    "result": "{\"scenarioId\":\"storetryon-list-navigation\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-visual-check",
+    "parameters": {
+      "screen": "walkthrough"
+    },
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"scenarioId\":\"storetryon-visual-check\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  {
+    "scenarioId": "storetryon-clear-confirm",
+    "parameters": {
+      "__leaf__timeout_secs": "180"
+    },
+    "result": "{\"scenarioId\":\"storetryon-clear-confirm\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-clear-restart-verify",
+    "parameters": {
+      "__leaf__timeout_secs": "180"
+    },
+    "result": "{\"scenarioId\":\"storetryon-clear-restart-verify\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-live-default",
+    "parameters": {
+      "__leaf__timeout_secs": "180",
+      "expectServiceReady": "true",
+      "restartCheck": "record"
+    },
+    "result": "{\"scenarioId\":\"storetryon-live-default\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-live-default",
+    "parameters": {
+      "__leaf__timeout_secs": "180",
+      "expectServiceReady": "true",
+      "restartCheck": "verify"
+    },
+    "result": "{\"scenarioId\":\"storetryon-live-default\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-network-probe",
+    "parameters": {
+      "__leaf__timeout_secs": "180"
+    },
+    "result": "{\"scenarioId\":\"storetryon-network-probe\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-live-ui",
+    "parameters": {
+      "confirmLiveRequest": "true"
+    },
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"scenarioId\":\"storetryon-live-ui\",\"status\":\"failed\",\"target\":\"preview\"}"
+        }
+      ],
+      "isError": false
+    }
+  },
+  {
+    "scenarioId": "storetryon-transport-recovery",
+    "result": "{\"scenarioId\":\"storetryon-transport-recovery\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-guard-retry",
+    "result": "Tool execution failed: Widget is not initialized"
+  },
+  {
+    "scenarioId": "storetryon-transport-recovery",
+    "parameters": {
+      "__leaf__timeout_secs": "180"
+    },
+    "result": "{\"scenarioId\":\"storetryon-transport-recovery\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-live-default",
+    "parameters": {
+      "expectServiceReady": "true",
+      "restartCheck": "record",
+      "__leaf__timeout_secs": "180"
+    },
+    "result": "{\"scenarioId\":\"storetryon-live-default\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+  },
+  {
+    "scenarioId": "storetryon-live-ui",
+    "revision": "transport-recovery",
+    "parameters": {
+      "confirmLiveRequest": "true"
+    },
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\"scenarioId\":\"storetryon-live-ui\",\"status\":\"succeeded\",\"target\":\"preview\"}"
+        }
+      ],
+      "isError": false
+    }
+  }
+]

@@ -47,3 +47,14 @@ Configure the public endpoint and separate proxy credential locally before runni
 - Destructive clear scenarios accept only entries with syntheticInputs:true or legacy sample:true. They refuse entries containing actual shopper photos. A live provider result from synthetic inputs may therefore be cleared by these explicitly synthetic-data scenarios, but the live-ui scenario itself never clears the list.
 
 These are authored checks, not claims that the new live-default or live-ui runs have passed. Record actual tool and Lens manager results separately after execution.
+
+
+## Guided UX revision
+
+The harness navigates Settings → ToggleMode to select free illustrations, and Settings → NewVisit to reset visit inputs without changing the list. Shopper capture stays on shopper review; Continue advances to garment capture; capture advances to review; TryOn advances through generating to result. Photo checks use the source-declared ShopperPhotoCard, GarmentPhotoCard and TryOnPreviewCard roles, not a fixed global image count. Collection navigation uses the actual ScrollWindow Interactable to reach offscreen OpenItem controls, then opens item detail.
+
+Updated existing scenarios cover inactive early actions, capture-fault Retry (temporarily missing fixture restored in finally), retained usable garment after failed retake, disabled duplicate Add, explicit Cancel/Confirm clear, image/provenance persistence and live API preservation. Destructive clear still refuses entries not marked synthetic. The cache credential is never logged.
+
+New free cases: storetryon-guided-navigation validates Back/retake and settings result invalidation; storetryon-background-generation checks collection browsing during the actual 0.8-second illustrative operation and ViewTryOn afterward; storetryon-visual-check leaves the requested stable guided state for inspection. Its screen parameter accepts shopper, shopper-review, garment, review, result, list, item, settings, clear and error. It also accepts generating, but that is a real transient operation and cannot be held after scenario return; capture while in flight. Visual list/item cases seed one synthetic entry only when empty. No scenario auto-runs.
+
+Recommended run: free guided-navigation, shirt-flow, jacket-reuse, guard-retry, background-generation, list-navigation; persistence-seed → actual reset → persistence-verify; clear-confirm → actual reset → clear-restart-verify. Run visual-check separately for screenshots and report actual IK outcomes. Live-default remains free, with expectServiceReady=auto/true/false; live-ui and live-network retain confirmLiveRequest=false unless an authorized paid run is explicitly selected. These revised cases have not been claimed to pass until root executes them.

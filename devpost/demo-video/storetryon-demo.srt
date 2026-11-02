@@ -1,0 +1,135 @@
+1
+00:00:00,250 --> 00:00:02,226
+StoreTryOn helps shoppers preview a shirt
+
+2
+00:00:02,226 --> 00:00:04,203
+or jacket, then keep a shopping
+
+3
+00:00:04,203 --> 00:00:06,179
+list, all in a SPECS Lens.
+
+4
+00:00:08,250 --> 00:00:10,239
+This walkthrough is Lens Studio’s SPECS
+
+5
+00:00:10,239 --> 00:00:12,227
+preview, using clearly labelled synthetic photos.
+
+6
+00:00:12,227 --> 00:00:14,216
+I load the shopper photo once.
+
+7
+00:00:14,216 --> 00:00:16,204
+The Lens reuses it for the
+
+8
+00:00:16,204 --> 00:00:17,530
+rest of the visit.
+
+9
+00:00:22,250 --> 00:00:24,094
+I select Shirt and load the
+
+10
+00:00:24,094 --> 00:00:25,937
+garment photo. The review lets me
+
+11
+00:00:25,937 --> 00:00:27,781
+inspect it before sending. Only Try
+
+12
+00:00:27,781 --> 00:00:29,624
+it on starts an API request.
+
+13
+00:00:36,250 --> 00:00:38,549
+That action sends both photos over
+
+14
+00:00:38,549 --> 00:00:40,849
+HTTPS to the protected proxy, which
+
+15
+00:00:40,849 --> 00:00:43,148
+keeps the YouCam key on the
+
+16
+00:00:43,148 --> 00:00:45,447
+server. It uploads the images, creates
+
+17
+00:00:45,447 --> 00:00:47,747
+a Clothes V4 task, polls for
+
+18
+00:00:47,747 --> 00:00:50,046
+completion, and downloads the result. The
+
+19
+00:00:50,046 --> 00:00:52,345
+on-screen stages reflect that work, with
+
+20
+00:00:52,345 --> 00:00:53,495
+no fake percentage.
+
+21
+00:01:06,250 --> 00:01:07,956
+The returned image is a real
+
+22
+00:01:07,956 --> 00:01:09,661
+YouCam result. I compare it with
+
+23
+00:01:09,661 --> 00:01:11,367
+the garment, then add it to
+
+24
+00:01:11,367 --> 00:01:13,072
+my shopping list. A second tap
+
+25
+00:01:13,072 --> 00:01:14,778
+cannot save the same result twice.
+
+26
+00:01:24,250 --> 00:01:26,494
+Local storage keeps JPEG thumbnails instead
+
+27
+00:01:26,494 --> 00:01:28,737
+of expiring links. I open a
+
+28
+00:01:28,737 --> 00:01:30,981
+saved item to see both photos.
+
+29
+00:01:30,981 --> 00:01:32,851
+Clearing the list requires confirmation.
+
+30
+00:01:38,250 --> 00:01:40,513
+YouCam AI Clothes V4 uses upper_body
+
+31
+00:01:40,513 --> 00:01:42,777
+for shirts and outer for jackets,
+
+32
+00:01:42,777 --> 00:01:45,040
+layering jackets over the existing outfit.
+
+33
+00:01:48,250 --> 00:01:50,886
+Capture, try on, save. Preview appearance.
+
+34
+00:01:50,886 --> 00:01:52,644
+Check fit in store.

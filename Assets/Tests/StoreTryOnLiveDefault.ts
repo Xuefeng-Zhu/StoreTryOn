@@ -17,12 +17,19 @@ export class StoreTryOnLiveDefault extends Scenario {
     expect(snapshot.sampleMode).toBe(true)
     expect(snapshot.useLiveApi).toBe(true)
     expect(snapshot.previewFromLiveApi).toBe(false)
-    h.assertLiveConfigurationFromCache()
+    const expectedReady = config?.get('expectServiceReady') || 'auto'
+    if (expectedReady !== 'auto' && expectedReady !== 'true' && expectedReady !== 'false') throw new Error('expectServiceReady must be auto, true, or false.')
+    if (expectedReady !== 'auto') expect(snapshot.serviceReady).toBe(expectedReady === 'true')
+    if (snapshot.serviceReady) h.assertLiveConfigurationFromCache()
     // Reading settings for another origin must not forward the cached token.
     expect(resolvePreviewProxySettings('https://different.invalid', '', true).accessToken.length === 0).toBe(true)
-    expect(h.visibleTextContains('LIVE YOUCAM · SAMPLE PHOTOS · uses credits')).toBe(true)
-    expect(h.visibleTextContains('Use illustrations')).toBe(true)
-    expect(h.visibleTextContains('Try it on sends them to YouCam')).toBe(true)
+    expect(snapshot.screen).toBe('shopper')
+    expect(h.visibleTextContains('Sample photos')).toBe(true)
+    await h.settings()
+    expect(h.canActivate('ToggleMode')).toBe(true)
+    expect(h.main.getSnapshot().useLiveApi).toBe(true)
+    await h.tap('Back')
+    await h.screen('shopper')
     const restartCheck = config?.get('restartCheck') || 'record'
     if (restartCheck === 'verify') {
       const previousRuntime = global.persistentStorageSystem.store.getString(restartKey)
@@ -35,7 +42,8 @@ export class StoreTryOnLiveDefault extends Scenario {
     // Root verifies the authored Inspector credential is empty before resetting;
     // a running Lens cannot inspect that original field after cache resolution.
     print('[StoreTryOn LIVE UI] Default verified ' + JSON.stringify({restartCheck,
-      editor: true, syntheticInputs: true, liveApi: true, cachedCredentialMatchesRuntime: true,
+      editor: true, syntheticInputs: true, liveApi: true, serviceReady: snapshot.serviceReady,
+      cachedCredentialMatchesRuntime: snapshot.serviceReady,
       generationRequested: false, hardwareVerified: false}))
   }
 }
