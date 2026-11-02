@@ -29,4 +29,10 @@ The controller root is authored by the scene builder. All action names are assig
 4. Run clear-confirm; reset the actual preview runtime; run clear-restart-verify. Clear refuses any item not explicitly marked sample, exercises Back/Next cancellation, and only then clears synthetic entries.
 5. Run ik-reach. Default requireDirect:false tests the layout's actual route and logs direct poke versus far-field ray; setting requireDirect:true makes an indirect route fail. Diagnostic policy is fail-fast, preventing a silent scripted fallback from passing a failed IK reach.
 
-No scenario auto-runs. Checkpoint scenarios write a small separate StoreTryOn.LEAF.checkpoint.v1 key; it contains IDs/checksums, not duplicate photo bodies. These tests do not prove camera permissions/capture, real shopper photo transfer, network latency, live YouCam generation, physical hand comfort, device restart persistence, or hardware storage retention.
+No scenario auto-runs. Checkpoint scenarios write a small separate StoreTryOn.LEAF.checkpoint.v1 key; it contains IDs/checksums, not duplicate photo bodies. These nine synthetic action scenarios do not prove camera permissions/capture, real shopper photo transfer, network latency, live YouCam generation, physical hand comfort, device restart persistence, or hardware storage retention.
+
+## Additional networking scenarios
+
+`storetryon-network-probe` uses actual `InternetModule` HTTPS to assert health 200, missing/wrong credentials 401, and valid-credential request validation 400, without starting generation. `storetryon-live-network` uses the same production `StoreTryOnProxy` as the application and synthetic input textures to perform one actual provider generation and decode the returned JPEG into a native Texture. The live scenario requires the explicit `confirmLiveRequest=true` parameter and otherwise refuses to spend credits.
+
+Configure the public endpoint and separate proxy credential locally before running these preview-only scenarios. Never put credentials in LEAF parameters or logs. The verification run cleared the transient credential before saving the scene. See [network results](../Evidence/network-preview/README.md) for actual outcomes and scope.

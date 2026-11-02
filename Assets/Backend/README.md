@@ -2,7 +2,7 @@
 
 This is the server half of the SPECS Lens integration. It uses the current YouCam Clothes V4 upload/task/poll/download protocol. The YouCam key exists only in server environment configuration. It must never be embedded in the Lens, Inspector, sample data, source repository, or a packaged asset.
 
-**Current verification:** all eleven mocked-transport/local HTTP tests pass. On November 1, 2026 (America/Los_Angeles), the standalone adapter also completed one real Clothes V4 shirt request (`upper_body`, 16.52 seconds) and one jacket request (`outer`, 25.50 seconds), using synthetic input fixtures and the privately supplied working credential. Both returned 1024×1536 JPEG results; sanitized evidence and generated output bytes are in `Assets/LiveEvidence/`. This proves actual provider requests and usable credits for those two calls. It does not establish a public HTTPS deployment, Lens-to-proxy networking, physical camera capture, or on-device persistence. The labelled illustrative sample mode remains separate from these real provider outputs.
+**Current verification:** all eleven mocked-transport/local HTTP tests pass. The standalone adapter completed real Clothes V4 shirt/jacket requests from synthetic fixtures, with outputs in `Assets/LiveEvidence/`. The protected HTTPS deployment is running on InstaCloud Free. Subsequently, the actual Lens `InternetModule` passed HTTPS/authentication and one live shirt upload/poll/decode in SPECS 27 preview (14.973 seconds, 1024×1536 JPEG). [Network evidence](../Evidence/network-preview/README.md). Physical-device networking, camera capture, and device relaunch persistence remain unverified. Labeled illustrative sample-mode outputs remain separate from real provider responses.
 
 ## Required setup
 
@@ -10,7 +10,7 @@ This is the server half of the SPECS Lens integration. It uses the current YouCa
 2. Deploy this directory as a private Node 22+ service behind an HTTPS ingress. Configure secrets through the hosting service's secret manager: `YOUCAM_API_KEY` and a separate, randomly generated `STORETRYON_PROXY_TOKEN` of at least 32 characters. Use a demo-specific token and rotate it after the demo. Do not place credential files inside Lens `Assets/`.
 3. Run `npm start` from this directory. The server defaults to `127.0.0.1:8787`. A container host that requires listening on all interfaces must set `HOST=0.0.0.0`; use the host's `PORT`. Keep port 8787 private behind the TLS ingress. The Node service itself serves HTTP and must not be exposed directly to the internet.
 4. Set the Lens proxy base URL to the public **HTTPS** origin and its proxy bearer token to the separate demo token. InternetModule must be permitted in the Lens; Lens Studio preview must simulate SPECS. The YouCam API key is never entered in the Lens.
-5. The standalone shirt/jacket proof has passed with synthetic fixtures. Next verify the Lens against the deployed HTTPS proxy using authorized real captures. Keep those device/end-to-end outcomes separate from standalone adapter evidence and sample-mode tests.
+5. Standalone and SPECS 27 preview networking proof have passed with synthetic inputs. Next verify physical SPECS networking and authorized real camera captures. Keep device outcomes separate from preview, standalone-adapter, and illustrative sample evidence.
 
 The default signed-media hostname allowlist is `yce-us.s3-accelerate.amazonaws.com`, which appears in the official upload and result examples for the `yce-api-01.makeupar.com` integration. If an actual legitimate provider response uses another host, confirm the host with the provider and add its **exact** name to the server-only comma-separated `YOUCAM_MEDIA_HOSTS` configuration. No wildcards, redirect following, IP literals, local DNS targets, or client-supplied URLs are accepted.
 
@@ -85,3 +85,13 @@ The tests use generated PNG inputs, a mocked YouCam transport, and an actual eph
 - [Clothes V4 overview](https://docs.perfectcorp.com/reference/ai_clothes/section/overview)
 - [Clothes V4 file specifications and errors](https://docs.perfectcorp.com/reference/ai_clothes/section/overview/file-specs-and-errors)
 - [Provider file retention](https://docs.perfectcorp.com/develop/file_retention_period)
+
+## Current HTTPS deployment
+
+The protected proxy is deployed on InstaCloud Free, project `storetryon-proxy`, branch `network-verification`, service `youcam-proxy`. Its public origin is [the StoreTryOn proxy](https://prod-network-verification-you-1e514f-00y9mk947ef.compute.instacloud-edge.com); the unauthenticated [health check](https://prod-network-verification-you-1e514f-00y9mk947ef.compute.instacloud-edge.com/healthz) returned HTTP200 on November1,2026 America/Los_Angeles. Missing and wrong demo tokens returned HTTP401; a valid token reading an unknown job returned HTTP404. No generation request was made during deployment checks.
+
+The service is capped at one shared vCPU/256MB, has no volume, and uses scale-to-zero with always-on off. The organization remained Free with no subscription, plan change, or overage. Only four runtime/build files (6632 compressed bytes) were uploaded. Provider and demo credentials were injected through official CLI stdin, then provided by the platform as runtime environment variables; neither is baked into the image. The private CLI project/session context is retained outside Lens `Assets/`; no host tooling credentials, provider key, or demo token are included in Lens/source assets. Future deployments run the CLI from that private context and pass this backend directory as the explicit source path.
+
+These are host-to-proxy HTTPS checks. They do not prove a Lens InternetModule request or a physical SPECS connection. Sanitized IDs, image digest, and observed checks are in [deployment.json](deployment.json).
+
+A subsequent [Lens-runtime verification](../Evidence/network-preview/README.md) separately passed health/authentication, actual `InternetModule` upload/polling, and native image decoding in SPECS 27 preview. That run consumed one real shirt generation. No physical-device connection was available.

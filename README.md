@@ -22,14 +22,15 @@ On hardware, photograph your own front-facing full-body photo from another displ
 - The corrected IK test activates Shopping list through a far-field hand ray with zero diagnostics. Direct touch and physical-device ergonomics remain unverified.
 - Eleven backend tests pass using mocked provider transport and local HTTP.
 - Two real standalone YouCam adapter calls succeeded from synthetic inputs: shirt `upper_body` in 16.52 seconds and jacket `outer` in 25.50 seconds. Both generated JPEGs were downloaded and inspected.
+- Two additional network scenarios pass through the actual SPECS 27 preview runtime: HTTPS/authentication and a real shirt request through `InternetModule`. The generated 1024×1536 JPEG decoded in the Lens after 14.973 seconds. [Network verification](Assets/Evidence/network-preview/README.md).
 
 See [preview results and earlier failed attempts](Assets/Evidence/README.md) and [real API evidence](Assets/LiveEvidence/README.md). A compile pass alone is not runtime proof.
 
-## Remaining setup
+## Live networking setup
 
-Deploy [Assets/Backend](Assets/Backend/README.md) behind HTTPS with a server-only `YOUCAM_API_KEY` and a separate, revocable proxy token. Set `proxyBaseUrl` and `proxyAccessToken` on StoreTryOnMain. Those Lens fields are currently empty. Do not put the YouCam key in the Inspector or in `Assets/`.
+The protected [backend](Assets/Backend/README.md) is deployed behind HTTPS on InstaCloud Free. The public `proxyBaseUrl` is configured on StoreTryOnMain. Its separate revocable proxy credential was loaded transiently for the live network tests and cleared before saving, so it is not committed in the scene. Keep local operator credentials outside `Assets/` and configure `proxyAccessToken` locally for live use. Do not put the YouCam provider key in the Inspector or in `Assets/`.
 
-Lens-to-proxy networking, real shopper-photo input, world-camera capture, physical hand tracking, and persistence across SPECS app/device sessions still require verification. Wearable judge access is unresolved. No Lens publishing or Devpost submission has been performed.
+Lens-to-proxy HTTPS upload, polling, response retrieval, and native image decoding passed in SPECS 27 preview. Physical-device networking, real shopper-photo input, world-camera capture, physical hand tracking, and persistence across SPECS app/device sessions still require verification. Wearable judge access is unresolved. No Lens publishing or Devpost submission has been performed.
 
 - [SPECS design brief](devpost/design-brief.md)
 - [Verified YouCam V4 contract and setup gaps](devpost/youcam-integration.md)

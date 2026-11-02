@@ -1,0 +1,140 @@
+{
+  "recordedAt": "2026-11-02T07:31:19.820Z",
+  "timezone": "America/Los_Angeles",
+  "freshRequests": true,
+  "mocked": false,
+  "priorEvidencePreserved": true,
+  "categories": [
+    {
+      "category": "jacket",
+      "garmentCategory": "outer",
+      "provider": "YouCam Clothes V4",
+      "startedAt": "2026-11-02T07:30:41.536Z",
+      "status": "success",
+      "inputOrigin": "Synthetic shopper and garment fixtures from Assets/Samples",
+      "proofScope": "Fresh real local authenticated HTTP proxy → YouCam → downloaded image; not deployed HTTPS, Lens, or device proof",
+      "httpSteps": [
+        {
+          "phase": "unauthorized-request",
+          "httpStatus": 401
+        },
+        {
+          "phase": "create-job",
+          "httpStatus": 202
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "processing"
+        },
+        {
+          "phase": "poll-job",
+          "httpStatus": 200,
+          "taskStatus": "success"
+        },
+        {
+          "phase": "delete-job",
+          "httpStatus": 200
+        },
+        {
+          "phase": "verify-deletion",
+          "httpStatus": 404
+        }
+      ],
+      "providerTaskStatus": "success",
+      "width": 1024,
+      "height": 1536,
+      "outputMimeType": "image/jpeg",
+      "outputBytes": 246692,
+      "outputFile": "Assets/LiveEvidence/http-20261101233041-7c285d/jacket-youcam-http-live.jpg",
+      "finishedAt": "2026-11-02T07:31:19.818Z",
+      "elapsedSeconds": 38.28
+    }
+  ],
+  "secretsSaved": false
+}

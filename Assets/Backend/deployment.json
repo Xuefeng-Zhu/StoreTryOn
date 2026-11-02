@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "observedAt": "2026-11-02T07:43:33.937Z",
+  "provider": "InstaCloud",
+  "projectId": "4d4be618-2a47-479c-a65f-4406e39a3bd4",
+  "projectName": "storetryon-proxy",
+  "branch": "network-verification",
+  "branchId": "90913025-5af0-4b71-819f-87d047f576fb",
+  "serviceId": "3b268d6e-87b1-4a9f-af70-3984e90a0d74",
+  "serviceName": "youcam-proxy",
+  "proxyBaseUrl": "https://prod-network-verification-you-1e514f-00y9mk947ef.compute.instacloud-edge.com",
+  "imageDigest": "sha256:d2c3e1b3f3e3b6013a047af360d111ba0f40253a12182a29bc24c9dd7c97ff9a",
+  "port": 8787,
+  "plan": "free",
+  "billingStatus": "active",
+  "subscriptionStatus": null,
+  "resourceCeiling": {
+    "cpu": 1,
+    "cpuKind": "shared",
+    "memoryMb": 256
+  },
+  "alwaysOn": false,
+  "volume": null,
+  "buildUpload": {
+    "files": 4,
+    "compressedBytes": 6632,
+    "contents": "Dockerfile, .dockerignore, server.mjs, package.json; no fixtures, tests, evidence, or credentials"
+  },
+  "runtimeState": "running",
+  "httpsChecks": [
+    {
+      "path": "/healthz",
+      "authorization": "none",
+      "status": 200
+    },
+    {
+      "path": "/v1/tryons",
+      "method": "POST",
+      "authorization": "none",
+      "status": 401
+    },
+    {
+      "path": "/v1/tryons",
+      "method": "POST",
+      "authorization": "wrong demo token",
+      "status": 401
+    },
+    {
+      "path": "/v1/tryons/00000000000000000000000000000000",
+      "authorization": "valid demo token",
+      "status": 404
+    }
+  ],
+  "youcamGenerationRequestsDuringDeploymentVerification": 0,
+  "evidenceBoundary": "Public HTTPS service and auth probes passed from host Node. Lens InternetModule and physical SPECS networking are separate checks owned by the Lens verifier."
+}

@@ -15,6 +15,8 @@ This evidence proves the standalone server adapter and provider account worked f
 
 The opt-in `Assets/Backend/test/live-proof.mjs` runner skips categories with an existing successful evidence record. It is deliberately excluded from `npm test`, whose transport is mocked.
 
+Subsequent checks separately exercised the [local HTTP proxy](HTTP-RETEST.md) and the [actual SPECS 27 preview InternetModule path](../Evidence/network-preview/README.md). Their evidence does not replace or broaden the scope of the original adapter records above.
+
 ## References
 
 - [YouCam Clothes V4 API](https://docs.perfectcorp.com/reference/ai_clothes/v4.0)

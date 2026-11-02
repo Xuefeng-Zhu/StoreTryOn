@@ -1,0 +1,42 @@
+{
+  "probe": {
+    "target": "SPECS 27 preview",
+    "health": 200,
+    "missingCredential": 401,
+    "wrongCredential": 401,
+    "authenticatedValidation": 400,
+    "generationRequested": false
+  },
+  "request": {
+    "category": "shirt",
+    "inputs": "synthetic",
+    "transport": "Lens InternetModule HTTPS",
+    "shopperBase64Characters": 249868,
+    "garmentBase64Characters": 406512
+  },
+  "result": {
+    "target": "SPECS 27 preview",
+    "provider": "YouCam Clothes V4",
+    "category": "shirt",
+    "inputOrigin": "synthetic fixtures",
+    "width": 1024,
+    "height": 1536,
+    "outputBytes": 215092,
+    "outputBase64Characters": 286792,
+    "checksum": 25461535,
+    "elapsedSeconds": 14.973,
+    "mocked": false,
+    "hardwareVerified": false
+  },
+  "recordedAt": "2026-11-01T23:55:19.176408-08:00",
+  "previewDevice": "SPECS 27",
+  "lensStudioVersion": "5.23.2",
+  "networkScenarios": "2 passed",
+  "endpoint": "https://prod-network-verification-you-1e514f-00y9mk947ef.compute.instacloud-edge.com",
+  "hardwareVerified": false,
+  "physicalDeviceAvailable": false,
+  "providerKeyInLens": false,
+  "proxyCredentialInSavedScene": false,
+  "captureMigration": "CaptureSession source compiled; hardware capture not tested",
+  "regression": "storetryon-guard-retry passed after capture cleanup changes"
+}

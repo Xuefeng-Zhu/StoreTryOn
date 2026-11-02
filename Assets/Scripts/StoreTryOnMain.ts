@@ -43,7 +43,7 @@ export class StoreTryOnMain extends BaseScriptComponent {
 
   onAwake(): void {
     this.createEvent('OnStartEvent').bind(() => this.start())
-    this.createEvent('OnDestroyEvent').bind(() => { this.active = false })
+    this.createEvent('OnDestroyEvent').bind(() => { this.active = false; this.capture?.stop() })
   }
 
   private start(): void {
@@ -87,7 +87,8 @@ export class StoreTryOnMain extends BaseScriptComponent {
       case 'ToggleMode':
         this.state.sampleMode = !this.state.sampleMode
         this.state.shopper = null; this.state.garment = null; this.state.invalidateResult()
-        if (!this.state.sampleMode && !global.deviceInfoSystem.isEditor()) this.capture.start()
+        if (this.state.sampleMode) this.capture.stop()
+        else if (!global.deviceInfoSystem.isEditor()) this.capture.start()
         this.state.message = this.state.sampleMode ? 'Sample mode uses synthetic images; no API request is made.' : 'Capture your own photo first. Try-on uploads both photos to YouCam.'
         break
       case 'ShoppingList': this.state.listOpen = true; this.state.selectedIndex = 0; await this.showSaved(); break

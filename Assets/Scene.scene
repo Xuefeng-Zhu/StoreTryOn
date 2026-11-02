@@ -2059,7 +2059,6 @@
   Enabled: true
   ScriptAsset: !<reference> 37a6641d-fe29-4bce-88fa-356ac3e63938
   ScriptInputsDefault:
-    proxyBaseUrl: true
     proxyAccessToken: true
     maxItems: true
     soundVolume: true
@@ -2068,7 +2067,7 @@
   ScriptInputs:
     "":
       ui: !<MappingBased.AssignableType_1> ef4bc499-5f1e-4505-beb7-cc30e9ae0b50
-      proxyBaseUrl: ""
+      proxyBaseUrl: "https://prod-network-verification-you-1e514f-00y9mk947ef.compute.instacloud-edge.com"
       proxyAccessToken: ""
       sampleShopper: !<reference.Texture> c8648497-5416-4615-8d1b-7f01cc76f0c8
       sampleShirt: !<reference.Texture> 87a7e101-dd0c-4432-8fef-c27cddeba4d2
