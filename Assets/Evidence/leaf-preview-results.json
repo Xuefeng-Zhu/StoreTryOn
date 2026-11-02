@@ -1,0 +1,133 @@
+{
+  "recordedAt": "2026-11-01T23:19:48.374840-08:00",
+  "target": "Lens Studio SPECS preview",
+  "lensStudio": "5.23.2",
+  "packages": {
+    "SIK": "2.0.0",
+    "UIKit": "2.0.0",
+    "LEAF": "2.0.2",
+    "Inspect": "2.0.1"
+  },
+  "finalPassCount": 9,
+  "scenarioCount": 9,
+  "latestResults": [
+    {
+      "timeLocal": "23:05:16.209",
+      "scenario": "storetryon-shirt-flow",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:08:57.283",
+      "scenario": "storetryon-jacket-reuse",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:09:31.546",
+      "scenario": "storetryon-guard-retry",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:10:04.918",
+      "scenario": "storetryon-list-navigation",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:10:21.452",
+      "scenario": "storetryon-persistence-seed",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:10:47.814",
+      "scenario": "storetryon-persistence-verify",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:11:27.342",
+      "scenario": "storetryon-clear-confirm",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:11:42.941",
+      "scenario": "storetryon-clear-restart-verify",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:17:19.884",
+      "scenario": "storetryon-ik-reach",
+      "status": "passed"
+    }
+  ],
+  "attempts": [
+    {
+      "timeLocal": "23:05:16.209",
+      "scenario": "storetryon-shirt-flow",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:07:28.350",
+      "scenario": "storetryon-jacket-reuse",
+      "status": "failed",
+      "detail": "Error: Scenario \"storetryon-jacket-reuse\" timed out after 90s"
+    },
+    {
+      "timeLocal": "23:08:57.283",
+      "scenario": "storetryon-jacket-reuse",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:09:31.546",
+      "scenario": "storetryon-guard-retry",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:10:04.918",
+      "scenario": "storetryon-list-navigation",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:10:21.452",
+      "scenario": "storetryon-persistence-seed",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:10:47.814",
+      "scenario": "storetryon-persistence-verify",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:11:27.342",
+      "scenario": "storetryon-clear-confirm",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:11:42.941",
+      "scenario": "storetryon-clear-restart-verify",
+      "status": "passed"
+    },
+    {
+      "timeLocal": "23:12:33.466",
+      "scenario": "storetryon-ik-reach",
+      "status": "failed",
+      "detail": "Error: Timed out waiting for IK opens Shopping list; phase=ready"
+    },
+    {
+      "timeLocal": "23:17:19.884",
+      "scenario": "storetryon-ik-reach",
+      "status": "passed"
+    }
+  ],
+  "ik": {
+    "route": "far-field ray",
+    "hover": 1,
+    "triggerStart": 1,
+    "triggerEnd": 1,
+    "triggerEndOutside": 0,
+    "buttonUp": 1,
+    "diagnosticEntries": 0
+  },
+  "scope": "Synthetic editor inputs and illustrative previews; real UIKit/SIK controls, JPEG byte storage, actual preview-runtime resets. Not hardware camera, device relaunch, or live Lens networking proof.",
+  "investigationNotes": [
+    "First jacket run timed out; diagnostic rerun passed, initial cause not established.",
+    "First IK run failed with a fixed 500 ms avatar delay; corrected the test to await ik.ready, then activation passed with zero diagnostics."
+  ]
+}

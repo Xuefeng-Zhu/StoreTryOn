@@ -39,7 +39,7 @@ Use Clothes V4: `upper_body` for shirts and `outer` for jackets. The jacket cate
 
 The proxy uses a separate revocable access token for this prototype, bounded uploads/jobs/polling, and sanitized errors. This prototype token can be extracted from a Lens and must not be treated as a provider secret or a production identity system. A public release needs user authentication and operational abuse controls.
 
-As of the initial build, no `.env*` or YouCam credential-named files were found in this project, and no matching credential environment-variable names were present in the current shell. Live proof needs a usable server-only `YOUCAM_API_KEY`, credits for shirt and jacket requests, a deployed HTTPS proxy, and Lens proxy configuration. Continue all independent implementation while these are missing. See [verified integration notes](youcam-integration.md).
+The user supplied an external credential location during implementation; no provider key was copied into this project. Real backend requests succeeded for a shirt (`upper_body`, 16.52 seconds) and jacket (`outer`, 25.50 seconds), using synthetic input photos. Downloaded results and sanitized request-status evidence are in [Assets/LiveEvidence](../Assets/LiveEvidence/). This proves the standalone backend adapter; Lens-to-proxy networking, physical capture, and the shopper's own photo remain unverified. A deployed HTTPS proxy and Lens proxy configuration are still needed. See [verified integration notes](youcam-integration.md).
 
 ## Done criteria and evidence
 

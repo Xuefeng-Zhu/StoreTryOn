@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "origin": "OpenAI built-in imagegen",
+  "synthetic": true,
+  "youcamGenerated": false,
+  "createdLocalDate": "2026-11-01",
+  "width": 1024,
+  "height": 1536,
+  "fixtures": {
+    "shopper": "shopper-synthetic.png",
+    "shirt": "shirt-synthetic.png",
+    "jacket": "jacket-synthetic.png",
+    "shirtIllustration": "shirt-preview-illustration.png",
+    "jacketIllustration": "jacket-preview-illustration.png"
+  },
+  "inputDisclosure": "Synthetic sample • simulated capture",
+  "resultDisclosure": "Illustrative sample • not YouCam output",
+  "provenance": "PROVENANCE.md"
+}

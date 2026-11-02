@@ -19,6 +19,8 @@ Cache/
 Support/
 Workspaces/
 PluginsUserPreferences/
+Plugins/
+leaf_plugin_settings.json
 *.lock
 .virtual-scene.json
 .icon_tmp/
@@ -26,6 +28,7 @@ PluginsUserPreferences/
 node_modules/
 coverage/
 *.log
+!Assets/Evidence/leaf-preview-manager.log
 
 # Added by Lens Studio (LEAF plugin)
 leaf_plugin_settings.json

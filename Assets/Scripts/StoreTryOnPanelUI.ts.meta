@@ -1,0 +1,58 @@
+- !<AssetImportMetadata/686315fc-29f4-4834-b2c9-bf2fdd716c74>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> ab1d6f09-c054-47cc-aceb-f327bfda7a1f
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> ab1d6f09-c054-47cc-aceb-f327bfda7a1f
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> ffdcab8b-d93e-46a9-bfcb-805d2717feef
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/ffdcab8b-d93e-46a9-bfcb-805d2717feef>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: fe3c26e3-4982-4c88-a161-90d1fb9ed05c
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    accentColor: false
+    panelHeight: false
+    panelWidth: false
+    textColor: false
+    title: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - panelWidth: !<float> 46.000000
+      panelHeight: !<float> 64.000000
+      textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      accentColor: !<Vec4> {x: 0.520000, y: 0.920000, z: 0.780000, w: 1.000000}
+      title: StoreTryOn
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input float panelWidth = 46 {"hint":"Spatial window content width, in centimeters.", "widget":"slider", "min":40, "max":48, "step":1}'
+    - '// @input float panelHeight = 64 {"hint":"Spatial window content height, in centimeters.", "widget":"slider", "min":58, "max":70, "step":1}'
+    - '// @input vec4 textColor = {1,1,1,1} {"hint":"White text is visible on the additive SPECS display.", "widget":"color"}'
+    - '// @input vec4 accentColor = {0.52,0.92,0.78,1} {"hint":"Accent color for status and sample labelling.", "widget":"color"}'
+    - '// @input string title = "StoreTryOn" {"hint":"Window title."}'

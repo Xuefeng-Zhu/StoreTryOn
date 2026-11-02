@@ -1,0 +1,51 @@
+{
+  "category": "shirt",
+  "garmentCategory": "upper_body",
+  "provider": "YouCam Clothes V4",
+  "inputOrigin": "OpenAI imagegen synthetic shopper and garment fixtures",
+  "inputShopper": "Assets/Samples/shopper-synthetic.png",
+  "inputGarment": "Assets/Samples/shirt-synthetic.png",
+  "startedAt": "2026-11-02T06:52:07.737Z",
+  "status": "success",
+  "proofScope": "Real standalone backend adapter request; not Lens end-to-end or hardware capture proof",
+  "finishedAt": "2026-11-02T06:52:24.262Z",
+  "elapsedSeconds": 16.52,
+  "outputFile": "Assets/LiveEvidence/shirt-youcam-live.jpg",
+  "outputBytes": 233541,
+  "width": 1024,
+  "height": 1536,
+  "outputMimeType": "image/jpeg",
+  "observedMediaHosts": [
+    "yce-us.s3-accelerate.amazonaws.com"
+  ],
+  "requests": [
+    {
+      "phase": "registering-files",
+      "httpStatus": 200,
+      "providerStatus": 200
+    },
+    {
+      "phase": "uploading-input",
+      "httpStatus": 200
+    },
+    {
+      "phase": "uploading-input",
+      "httpStatus": 200
+    },
+    {
+      "phase": "submitting-task",
+      "httpStatus": 200,
+      "providerStatus": 200
+    },
+    {
+      "phase": "polling-task",
+      "httpStatus": 200,
+      "providerStatus": 200,
+      "taskStatus": "success"
+    },
+    {
+      "phase": "downloading-output",
+      "httpStatus": 200
+    }
+  ]
+}

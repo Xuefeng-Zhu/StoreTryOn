@@ -1,6 +1,6 @@
 # YouCam Clothes V4 integration notes
 
-Verified against official documentation on November 1, 2026 (America/Los_Angeles). This is an implementation contract, not evidence of a successful live API request.
+Verified against official documentation on November 1, 2026 (America/Los_Angeles). The implementation contract below is now backed by two successful standalone backend calls with synthetic inputs; the evidence boundary and remaining Lens/device checks are recorded under Current setup evidence.
 
 ## Server-side contract
 
@@ -28,7 +28,7 @@ Use `upper_body` for a shirt and `outer` for a jacket. Publicly accessible `src_
 
 The task-state enum is `running`, `success`, `error`. Errors can include `data.error` and `data.error_message`. HTTP errors include invalid credentials (401), bad parameters/insufficient credits (400, including `CreditInsufficiency`), rate limits (429), and provider timeout (500). Fail explicitly and leave a retry path; a sample image must never silently replace a failed live request. [Clothes OpenAPI](https://docs.perfectcorp.com/_bundle/reference/ai_clothes.json?download=).
 
-`outer` renders a jacket or vest over the shopper's existing outfit. Each request handles one garment category. Official release guidance quotes two units per V4 image; available credit balance still needs confirmation in the account. [V4 outerwear release](https://www.perfectcorp.com/business/blog/ai-clothes/ai-clothes-try-on-api-v4-outerwear).
+`outer` renders a jacket or vest over the shopper's existing outfit. Each request handles one garment category. Official release guidance quotes two units per V4 image. The two successful calls below establish that usable credits were available for those calls; the remaining account balance was not inspected. [V4 outerwear release](https://www.perfectcorp.com/business/blog/ai-clothes/ai-clothes-try-on-api-v4-outerwear).
 
 ## Image preparation
 
@@ -42,16 +42,19 @@ Provider download links last two hours. Current retention guidance states upload
 
 Use the Lens `InternetModule` with HTTPS requests to a controlled backend, not a provider key embedded in the Lens. Snap officially supports HTTPS fetch; Preview requires Device Type Override = Spectacles. HTTP needs Experimental APIs and prevents publication. Fetch response bytes/text/JSON are available; browser `Blob`, `FormData`, and `arrayBuffer` are not reliable supported interfaces here. JSON with base64 JPEG input is a suitable small prototype transport to the proxy. [Snap internet access](https://developers.snap.com/spectacles/about-spectacles-features/apis/internet-access).
 
-Recommended proxy shape (application design): authenticated `/tryon` accepts two bounded image payloads plus `shirt`/`jacket`; maps categories server-side; uploads to YouCam; returns an opaque job ID; `/tryon/{jobId}` checks only the caller's own job; server downloads the result and returns image bytes/base64. Bound request sizes, job lifetime/concurrency, polling and spend; avoid a public unlimited shared-key relay. A per-install short-lived demo token is preferable to shipping the provider key, but is still extractable and must be revocable/rate-limited. A real user session is preferable for a public release.
+Implemented prototype proxy: bearer-authenticated `POST /v1/tryons` accepts two bounded base64 image payloads plus `shirt`/`jacket`, maps categories server-side, uploads to YouCam, and returns an opaque random job ID. `GET /v1/tryons/{id}` returns status and downloaded image bytes/base64. Request sizes, job lifetime/concurrency, polling, and new-job rate are bounded; `DELETE /v1/tryons/{id}` removes the memory record. The independent revocable demo token keeps the provider key off-device, but is extractable from a packaged Lens and does not identify individual users. This controlled demo server has no user-account isolation; a public release needs individual authenticated users and per-user authorization/quotas. See [backend setup and contract](../Assets/Backend/README.md).
 
 Snap Cloud Edge Functions are another server-side route if this account has access. Official Snap documentation still labels Snap Cloud alpha and requires approved access; it cannot be presumed configured. [Snap Cloud overview](https://developers.snap.com/spectacles/about-spectacles-features/snap-cloud/overview).
 
 ## Current setup evidence and missing setup
 
-- Project scan found no `.env*` files and no YouCam/Perfect-named credential files.
-- Current shell environment has no names containing `YOUCAM`, `PERFECT`, or `YCE_`.
-- This is a narrow absence check, not proof that the user has no account or credentials elsewhere. Credential values were neither printed nor searched broadly in the home directory.
-- Missing for live proof: usable server-only `YOUCAM_API_KEY`, credits for at least one shirt and one jacket render, a deployed reachable HTTPS proxy, and a supported demo authorization configuration. Real shopper-photo input and photo-upload consent must also be exercised on hardware. Local proxy implementation and labelled samples can proceed independently.
+- The user supplied an existing external private credential file. It was read only into the opt-in proof process; its path, key values, and file contents are not stored in this repository or Lens.
+- On November 1, 2026 (America/Los_Angeles), the real backend adapter completed **one shirt request** (`upper_body`) in **16.52 seconds** and **one jacket request** (`outer`) in **25.50 seconds**. Both used the synthetic 1024×1536 shopper/garment fixtures under `Assets/Samples/`; both returned 1024×1536 JPEG images after real registration, uploads, task submission, and polling.
+- Actual signed uploads and output downloads used the already allowlisted `yce-us.s3-accelerate.amazonaws.com` host. No allowlist expansion or generation retry was needed. Exactly one successful generation per category was requested.
+- Sanitized HTTP/task status evidence is in [shirt proof](../Assets/LiveEvidence/shirt-live-proof.json) and [jacket proof](../Assets/LiveEvidence/jacket-live-proof.json). Downloaded generated bytes and their provenance are described in [live evidence](../Assets/LiveEvidence/README.md). No API credential, signed storage URL, private credential location, or provider task ID is included.
+- The eleven regular backend tests use mocked provider transport and a real ephemeral local HTTP server. They separately cover protocol/category mapping, authentication, image validation, URL restrictions, failure/timeout handling, result expiry/deletion, and concurrency/rate limits. These tests do not spend provider credits.
+- **Still missing:** a deployed reachable HTTPS proxy, server-side injection of the existing provider credential, an independent demo proxy token, and Lens proxy URL/token configuration. The Lens HTTPS endpoint remains unset. The successful proof called the exported backend adapter directly; it does not establish Lens-to-proxy communication.
+- **Still unverified on SPECS hardware:** real shopper-photo/garment capture and permission/consent flow, in-store image quality, live Lens API delivery, and shopping-list persistence across actual device Lens sessions. Labelled illustrative sample mode remains separate from the real provider output files.
 
 ## Event access constraints
 

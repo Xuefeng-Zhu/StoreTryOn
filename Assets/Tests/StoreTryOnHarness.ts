@@ -1,0 +1,201 @@
+import {DefaultLeafInteractor} from 'Leaf.lspkg/Interactors/interactor/DefaultLeafInteractor'
+import {findSceneObjectByName, sleep} from 'Leaf.lspkg/Utils/common/Utils'
+import {expect} from 'Leaf.lspkg/Utils/common/Expect'
+import {Button} from 'SpectaclesUIKit.lspkg/Scripts/Components/Button/Button'
+import {Interactable} from 'SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable'
+import {StoreTryOnMain} from '../Scripts/StoreTryOnMain'
+import {StoreTryOnAction} from '../Scripts/StoreTryOnPanelUI'
+import {StoredShoppingItem} from '../Scripts/StoreTryOnState'
+import {StoreTryOnStorage} from '../Scripts/StoreTryOnStorage'
+
+// Changes whenever the Lens runtime is actually restarted. It lets a persistence
+// verification reject a same-runtime read masquerading as a preview-reset test.
+const runtimeToken = Date.now().toString(36) + '-' + Math.random().toString(36)
+const checkpointKey = 'StoreTryOn.LEAF.checkpoint.v1'
+
+type Checkpoint = {kind: 'seeded' | 'cleared', runtimeToken: string, fingerprint: string, count: number}
+
+export class StoreTryOnHarness {
+  readonly interactor = new DefaultLeafInteractor()
+  constructor(readonly main: StoreTryOnMain, readonly root: SceneObject) {}
+
+  static async open(): Promise<StoreTryOnHarness> {
+    await sleep(1500)
+    if (!global.deviceInfoSystem.isEditor()) throw new Error('These synthetic-data scenarios are preview-only. Hardware acceptance is a separate check.')
+    const root = findSceneObjectByName('StoreTryOn')
+    if (!root) throw new Error('Authored StoreTryOn root was not found.')
+    const main = root.getComponent(StoreTryOnMain.getTypeName()) as StoreTryOnMain | null
+    if (!main) throw new Error('StoreTryOnMain is not attached to StoreTryOn.')
+    const harness = new StoreTryOnHarness(main, root)
+    await harness.until(() => main.getControl('ShopperPhoto') !== null, 'UIKit controls initialize')
+    await harness.idle()
+    return harness
+  }
+
+  target(action: StoreTryOnAction): Interactable {
+    const object = this.main.getControl(action)
+    if (!object) throw new Error('Missing source-declared control StoreTryOn.' + action)
+    expect(object.name).toBe('StoreTryOn.' + action)
+    expect(object.isEnabledInHierarchy).toBe(true)
+    const button = object.getComponent(Button.getTypeName()) as Button | null
+    if (!button || !button.interactable) throw new Error('UIKit Button has no SIK Interactable: ' + object.name)
+    expect(button.interactable.enabled).toBe(true)
+    expect(button.interactable.colliders.length > 0).toBe(true)
+    return button.interactable
+  }
+
+  async tap(action: StoreTryOnAction): Promise<void> {
+    // Exercise SIK targeting and UIKit's trigger-up binding. Never call the
+    // controller's handleAction() or invoke the UI action event directly.
+    await this.interactor.trigger(this.target(action))
+    await sleep(100)
+    await this.idle()
+  }
+
+  async until(condition: () => boolean, label: string, timeoutMs = 15000): Promise<void> {
+    for (let elapsed = 0; elapsed < timeoutMs; elapsed += 50) {
+      if (condition()) return
+      await sleep(50)
+    }
+    throw new Error('Timed out waiting for ' + label + '; phase=' + this.main.getSnapshot().phase)
+  }
+
+  async idle(): Promise<void> { await this.until(() => !this.main.getSnapshot().busy, 'action completion') }
+
+  async capturePage(): Promise<void> {
+    if (this.main.getSnapshot().listOpen) await this.tap('Back')
+    expect(this.main.getSnapshot().listOpen).toBe(false)
+  }
+
+  async sampleMode(): Promise<void> {
+    await this.capturePage()
+    if (!this.main.getSnapshot().sampleMode) await this.tap('ToggleMode')
+    expect(this.main.getSnapshot().sampleMode).toBe(true)
+    expect(this.visibleTextContains('SAMPLE MODE')).toBe(true)
+  }
+
+  async freshVisit(): Promise<void> {
+    await this.sampleMode()
+    // Both controls are real UI operations; the list is intentionally retained.
+    await this.tap('ToggleMode')
+    await this.tap('ToggleMode')
+    expect(this.main.getSnapshot().shopperReady).toBe(false)
+    expect(this.main.getSnapshot().garmentReady).toBe(false)
+    expect(this.main.getSnapshot().previewReady).toBe(false)
+  }
+
+  async shirtResult(): Promise<void> {
+    await this.sampleMode()
+    await this.tap('Shirt')
+    if (!this.main.getSnapshot().shopperReady) await this.tap('ShopperPhoto')
+    await this.tap('CaptureGarment')
+    await this.tap('TryOn')
+    const snapshot = this.main.getSnapshot()
+    expect(snapshot.phase).toBe('result')
+    expect(snapshot.previewReady).toBe(true)
+    expect(snapshot.message.includes('NOT a live YouCam result')).toBe(true)
+    expect(this.visibleTextContains('NOT YouCam')).toBe(true)
+    expect(this.visiblePhotos().length).toBe(2)
+  }
+
+  requireCapacity(slots: number): void {
+    if (this.main.getSnapshot().savedCount + slots > this.main.maxItems) {
+      throw new Error('Test precondition: ' + slots + ' free shopping-list slots required. Existing entries were preserved.')
+    }
+  }
+
+  requireSyntheticList(): StoredShoppingItem[] {
+    const items = new StoreTryOnStorage().read()
+    if (items.some(item => item.sample !== true)) {
+      throw new Error('Refusing destructive synthetic-preview test: list contains an entry not marked sample.')
+    }
+    return items
+  }
+
+  async ensureSavedSample(): Promise<void> {
+    if (this.main.getSnapshot().savedCount) return
+    this.requireCapacity(1)
+    await this.shirtResult()
+    await this.tap('AddToList')
+    expect(this.main.getSnapshot().savedCount).toBe(1)
+  }
+
+  visibleTextContains(fragment: string): boolean {
+    return this.objects().some(object => {
+      if (!object.isEnabledInHierarchy) return false
+      const text = object.getComponent('Component.Text') as Text | null
+      return !!text && text.enabled && text.text.includes(fragment)
+    })
+  }
+
+  visiblePhotos(): Image[] {
+    return this.objects().filter(object => object.name === 'StoreTryOn.PhotoPixels' && object.isEnabledInHierarchy)
+      .map(object => object.getComponent('Component.Image') as Image | null)
+      .filter(image => image !== null && image.enabled) as Image[]
+  }
+
+  private objects(): SceneObject[] {
+    const result: SceneObject[] = []
+    const visit = (object: SceneObject): void => {
+      result.push(object)
+      for (let i = 0; i < object.getChildrenCount(); i++) visit(object.getChild(i))
+    }
+    visit(this.root)
+    return result
+  }
+
+  static async assertJpeg(encoded: string): Promise<void> {
+    expect(encoded.startsWith('http')).toBe(false)
+    const bytes = Base64.decode(encoded)
+    expect(bytes.length > 100).toBe(true)
+    expect(bytes[0]).toBe(255)
+    expect(bytes[1]).toBe(216)
+    expect(bytes[2]).toBe(255)
+    const decoded = await new Promise<Texture>((resolve, reject) => {
+      Base64.decodeTextureAsync(encoded, resolve, () => reject(new Error('Persisted JPEG cannot be decoded to a Texture.')))
+    })
+    expect(decoded.getWidth() > 0).toBe(true)
+    expect(decoded.getHeight() > 0).toBe(true)
+    expect(Math.max(decoded.getWidth(), decoded.getHeight()) <= 192).toBe(true)
+  }
+
+  static async assertSavedImages(item: StoredShoppingItem): Promise<void> {
+    expect(item.sample).toBe(true)
+    await StoreTryOnHarness.assertJpeg(item.garmentImageBase64)
+    await StoreTryOnHarness.assertJpeg(item.previewImageBase64)
+    expect(item.garmentImageBase64 === item.previewImageBase64).toBe(false)
+  }
+
+  static fingerprint(items: StoredShoppingItem[]): string {
+    const checksum = (value: string): string => {
+      let a = 1, b = 0
+      for (let i = 0; i < value.length; i++) { a = (a + value.charCodeAt(i)) % 65521; b = (b + a) % 65521 }
+      return value.length + ':' + b + ':' + a
+    }
+    return JSON.stringify(items.map(item => ({id: item.id, category: item.category, sample: item.sample,
+      garment: checksum(item.garmentImageBase64), preview: checksum(item.previewImageBase64)})))
+  }
+
+  checkpoint(kind: 'seeded' | 'cleared'): void {
+    const items = this.requireSyntheticList()
+    const checkpoint: Checkpoint = {kind, runtimeToken, count: items.length, fingerprint: StoreTryOnHarness.fingerprint(items)}
+    global.persistentStorageSystem.store.putString(checkpointKey, JSON.stringify(checkpoint))
+    expect(global.persistentStorageSystem.store.getString(checkpointKey)).toBe(JSON.stringify(checkpoint))
+    print('[StoreTryOn LEAF] ' + kind + ' checkpoint saved; count=' + items.length + '. Reset preview before the matching verify scenario.')
+  }
+
+  async verifyCheckpoint(kind: 'seeded' | 'cleared'): Promise<void> {
+    const raw = global.persistentStorageSystem.store.getString(checkpointKey)
+    if (!raw) throw new Error('No LEAF checkpoint. Run persistence-seed or clear-confirm first, then reset preview.')
+    const checkpoint = JSON.parse(raw) as Checkpoint
+    expect(checkpoint.kind).toBe(kind)
+    if (checkpoint.runtimeToken === runtimeToken) throw new Error('An actual preview reset is required between checkpoint and verification; same-runtime storage reads do not prove restart persistence.')
+    const reloaded = this.requireSyntheticList()
+    expect(reloaded.length).toBe(checkpoint.count)
+    expect(StoreTryOnHarness.fingerprint(reloaded)).toBe(checkpoint.fingerprint)
+    expect(this.main.getSnapshot().savedCount).toBe(checkpoint.count)
+    expect(StoreTryOnHarness.fingerprint(this.main.state.items)).toBe(checkpoint.fingerprint)
+    for (const item of reloaded) await StoreTryOnHarness.assertSavedImages(item)
+    print('[StoreTryOn LEAF] Verified ' + kind + ' across a new preview runtime; count=' + reloaded.length + '. Hardware persistence remains unverified.')
+  }
+}

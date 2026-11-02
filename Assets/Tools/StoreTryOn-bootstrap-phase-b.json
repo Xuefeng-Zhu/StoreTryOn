@@ -1,0 +1,12 @@
+{
+  "modify": {
+    "@sceneObject:StoreTryOn": {
+      "components.ScriptComponent.ui":"@component:StoreTryOnWindow/StoreTryOnPanelUI",
+      "components.ScriptComponent.sampleShopper":"@asset:Samples/shopper-synthetic.png",
+      "components.ScriptComponent.sampleShirt":"@asset:Samples/shirt-synthetic.png",
+      "components.ScriptComponent.sampleJacket":"@asset:Samples/jacket-synthetic.png",
+      "components.ScriptComponent.sampleShirtPreview":"@asset:Samples/shirt-preview-illustration.png",
+      "components.ScriptComponent.sampleJacketPreview":"@asset:Samples/jacket-preview-illustration.png"
+    }
+  }
+}

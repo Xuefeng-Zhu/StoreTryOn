@@ -1,5 +1,0 @@
-{
-    "name": "LEAF Plugin",
-    "main": "dist/main.js",
-    "permissions": ["filesystem", "asset_library", "push_to_device"]
-}

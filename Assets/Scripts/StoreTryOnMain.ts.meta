@@ -1,0 +1,73 @@
+- !<AssetImportMetadata/81ee47b0-12a5-4b47-b663-0f7eafaa6c39>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 37a6641d-fe29-4bce-88fa-356ac3e63938
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 37a6641d-fe29-4bce-88fa-356ac3e63938
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> f58459e6-14ae-49cd-af92-427ab766dd59
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/f58459e6-14ae-49cd-af92-427ab766dd59>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 8caee378-1761-4eed-92cf-c9e891aaa67c
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    maxItems: false
+    proxyAccessToken: false
+    proxyBaseUrl: false
+    sampleJacket: false
+    sampleJacketPreview: false
+    sampleShirt: false
+    sampleShirtPreview: false
+    sampleShopper: false
+    soundVolume: false
+    ui: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - ui: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      proxyBaseUrl: ""
+      proxyAccessToken: ""
+      sampleShopper: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      sampleShirt: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      sampleJacket: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      sampleShirtPreview: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      sampleJacketPreview: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      maxItems: !<float> 6.000000
+      soundVolume: 0.300000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input AssignableType_1 ui {"hint":"UIKit shopping window. Wire the StoreTryOnPanelUI component."}'
+    - '// @input string proxyBaseUrl {"hint":"HTTPS URL of the secure YouCam proxy. The provider API key belongs only on its server."}'
+    - '// @input string proxyAccessToken {"hint":"Independent, revocable proxy access token. Never enter your YouCam API key here."}'
+    - '// @input Asset.Texture sampleShopper {"hint":"Synthetic shopper fixture for clearly labelled editor samples."}'
+    - '// @input Asset.Texture sampleShirt {"hint":"Sample shirt fixture."}'
+    - '// @input Asset.Texture sampleJacket {"hint":"Sample jacket fixture."}'
+    - '// @input Asset.Texture sampleShirtPreview {"hint":"Illustrative sample shirt result; not an API-generated result."}'
+    - '// @input Asset.Texture sampleJacketPreview {"hint":"Illustrative sample jacket result; not an API-generated result."}'
+    - '// @input float maxItems = 6 {"hint":"Maximum retained entries. Existing entries are never evicted automatically.", "widget":"slider", "min":1, "max":12, "step":1}'
+    - '// @input float soundVolume = 0.3 {"hint":"Volume of action and saved confirmation sounds.", "widget":"slider", "min":0, "max":1, "step":0.05}'
