@@ -2,9 +2,11 @@
 
 A SPECS Lens for clothing-store shoppers: capture a shirt or jacket, try it on using a reusable shopper photo, and save the garment and try-on preview in a device-local shopping list.
 
-**Submitted to the YouCam hackathon:** [Devpost project](https://devpost.com/software/storetryon) · [Watch the 1:54 demo](https://www.youtube.com/watch?v=kaKMy0Sg_cU) · [Judge setup](JUDGING.md). Entry `1278457` was verified Submitted on November 2, 2026.
+**Submitted to Learn AR with SPECS and the YouCam hackathon:** [Devpost project](https://devpost.com/software/storetryon) · [Watch the 1:38 demo](https://www.youtube.com/watch?v=hqWxZNm-q4M) · [Judge setup](JUDGING.md).
 
 Open `StoreTryOn.esproj` in Lens Studio 5.23.2 or newer. This project targets SPECS and uses Spectacles Interaction Kit and UIKit. It is not a browser application.
+
+The Devpost Learn `plan-lens` skill guided the original design interview; after the target was corrected to SPECS, CLAD built the Lens through the Lens Studio MCP, with LEAF used for preview checks. See the [design brief](devpost/design-brief.md).
 
 The Lens implements camera capture, photo-based try-on through a protected proxy, and a persistent local shopping list. Its guided native window moves from shopper photo to garment review, generation, result, and saved pieces. Editor preview uses labeled sample input photos and defaults to the live YouCam selection; a configured local proxy is required to generate. Hardware starts with live camera inputs. Provider credentials must never be embedded in the Lens or committed.
 
@@ -44,7 +46,7 @@ The client makes one creation POST per new attempt and never automatically repea
 
 ## Demo video
 
-[Watch the public **1-minute 54-second demo**](https://www.youtube.com/watch?v=kaKMy0Sg_cU). It uses actual Lens Studio SPECS Preview footage, synthetic input photos, and a real YouCam-generated result, retaining the entire observed processing wait at actual speed. The verified public video is attached to the [submitted Devpost entry](https://devpost.com/software/storetryon). [Publication and submission record](devpost/demo-video-publication.md).
+[Watch the public **1-minute 38-second demo**](https://www.youtube.com/watch?v=hqWxZNm-q4M). It uses actual Lens Studio SPECS Preview footage, synthetic input photos, and a real YouCam-generated result; the recorded generation wait is condensed and labelled on screen. It also shows the design brief and explains the plan-lens, CLAD and Lens Studio MCP workflow. The [earlier 1:54 demo](https://www.youtube.com/watch?v=kaKMy0Sg_cU) retains the observed wait at actual speed. [Publication and submission record](devpost/demo-video-publication.md).
 
 - [SPECS design brief](devpost/design-brief.md)
 - [Verified YouCam V4 contract and setup gaps](devpost/youcam-integration.md)
